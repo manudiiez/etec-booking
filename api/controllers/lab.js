@@ -1,4 +1,5 @@
 import Lab from '../models/Lab.js'
+import Module from '../models/Module.js'
 
 
 // CREATE 
@@ -48,6 +49,20 @@ export const getAllLabs = async (req, res, next) => {
     try {
         const labs = await Lab.find()
         res.status(200).json(labs)
+    } catch (error) {
+        next(error)
+    }
+}
+
+// GET ALL MODULES
+export const getLabModules = async (req, res, next) => {
+    const labId = req.params.labid
+    try {
+        const lab = await Lab.findById(labId)
+        const list = await Promise.all(lab.modules.map(module => {
+            return Module.findById(module)
+        }))
+        res.status(200).json(list)
     } catch (error) {
         next(error)
     }

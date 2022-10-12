@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 const subjectSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     type: {
         type: String,
@@ -12,7 +13,11 @@ const subjectSchema = new mongoose.Schema({
     age: {
         type: Number,
         required: true
+    },
+    teacher: {
+        type: String,
+        required: true
     }
 });
 
-export default mongoose.model('Subject', subjectSchema)
+export default mongoose.model('Subject', subjectSchema) 

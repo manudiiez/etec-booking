@@ -1,20 +1,20 @@
 import express from 'express'
 import { createSubject, deleteSubject, getAllSubjects, getSubject, updateSubject } from '../controllers/subject.js'
 /* ----------------------------- ERROR FUNCTION ----------------------------- */
-import { verifyUser } from '../utils/verifyToken.js'
+import { verifyAdmin, verifyUser } from '../utils/verifyToken.js'
 
 const router = express.Router()
 
 // CREATE
-router.post('/:userid', verifyUser, createSubject)
+router.post('/:userid', verifyAdmin, createSubject)
 
 // UPDATE
-router.put('/:id/:userid', verifyUser, updateSubject)
+router.put('/:id/:userid', verifyAdmin, updateSubject)
 // DELETE
-router.delete('/:id/:userid', verifyUser, deleteSubject)
+router.delete('/:id/:userid', verifyAdmin, deleteSubject)
 // GET
-router.get('/:id/:userid', verifyUser, getSubject)
+router.get('/:id/:userid', verifyAdmin, getSubject)
 // GET ALL
 router.get('/', getAllSubjects)
 
-export default router
+export default router 

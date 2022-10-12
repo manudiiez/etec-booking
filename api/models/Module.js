@@ -6,7 +6,8 @@ const moduleSchema = new mongoose.Schema({
         required: true
     },
     unavailableDates: [{
-        idSubject: String, 
+        subjectName: String, 
+        teacherName: String, 
         date: Date
     }]
 });
