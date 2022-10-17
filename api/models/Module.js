@@ -5,6 +5,22 @@ const moduleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    startHour: {
+        type: Number,
+        required: true
+    },
+    endHour: {
+        type: Number,
+        required: true
+    },
+    startTime: {
+        type: Number,
+        required: true
+    },
+    endTime: {
+        type: Number,
+        required: true
+    },
     unavailableDates: [{
         subjectName: String, 
         teacherName: String, 
@@ -12,4 +28,4 @@ const moduleSchema = new mongoose.Schema({
     }]
 });
 
-export default mongoose.model('Module', moduleSchema) 
+export default mongoose.model('Module', moduleSchema)  

@@ -1,5 +1,5 @@
 import express from 'express'
-import { createModule, deleteModule, getModule, updateModule } from '../controllers/module.js'
+import { createModule, deleteModule, getModule, updateModule, updateModuleAvailability } from '../controllers/module.js'
 import { verifyAdmin } from '../utils/verifyToken.js'
 
 const router = express.Router()
@@ -8,7 +8,7 @@ const router = express.Router()
 router.post('/:labid',verifyAdmin, createModule)
 // UPDATE
 router.put('/:id',verifyAdmin, updateModule)
-// router.put("/availability/:id", updateModuleAvailability);
+router.put("/availability/:id", updateModuleAvailability);
 
 // DELETE
 router.delete('/:id/:labid',verifyAdmin, deleteModule)

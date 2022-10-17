@@ -63,19 +63,16 @@ export const getModule = async (req, res, next) => {
 }
 
 
-// export const updateModuleAvailability = async (req, res, next) => {
-//     try {
+export const updateModuleAvailability = async (req, res, next) => {
 
-//         const reserve = await Module.findOne({username: req.body.username})
-
-
-//         const updated = await Module.findByIdAndUpdate(
-//             req.params.id,
-//             {$push: {unavailableDates: req.body} },
-//             { new: true }
-//         );
-//         res.status(200).json(updated);
-//     } catch (err) {
-//         next(err);
-//     }
-// };
+    try {
+        const updated = await Module.findByIdAndUpdate(
+            req.params.id,
+            {$push: {unavailableDates: req.body} },
+            { new: true }
+        );
+        res.status(200).json('modulo reservado');
+    } catch (err) {
+        next(err);
+    }
+};
