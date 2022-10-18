@@ -104,7 +104,7 @@ const Container = styled.section`
         label{
           color: ${props => props.theme.color_1};
           font-size: 1.3rem;
-          font-weight: 500;
+          font-weight: 400;
           span{
             color: #d10000;
           }
@@ -113,6 +113,7 @@ const Container = styled.section`
           padding: 1rem;
           font-size: 1rem;
           border: 1px solid ${props => props.theme.color_2};
+          background-color: transparent;
         }
       }
       p{

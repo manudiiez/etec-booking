@@ -13,6 +13,7 @@ import { GlobalStyles } from "./theme/theme";
 /* ------------------------------- COMPONENTS ------------------------------- */
 import ItemSignInContainer from "./pages/credentials/ItemSignInContainer";
 import ItemSignUpContainer from "./pages/credentials/ItemSignUpContainer";
+import ItemNavbarContainer from "./components/navbar/ItemNavbarContainer";
 
 
 
@@ -31,6 +32,7 @@ function App() {
   return (
     <>
       <GlobalStyles/>
+      <ItemNavbarContainer/>
       <BrowserRouter>
         <Routes>
           {/* LOGIN */}
