@@ -8,11 +8,11 @@ import {
 } from "react-router-dom";
 /* -------------------------------- COONTEXT -------------------------------- */
 import { AuthContext } from "./context/AuthContext";
+/* ------------------------------ GLOBALSTYLES ------------------------------ */
+import { GlobalStyles } from "./theme/theme";
 /* ------------------------------- COMPONENTS ------------------------------- */
-import Home from "./pages/home/Home";
-import Lab from "./pages/lab/Lab";
-import SignIn from "./pages/user/SignIn";
-import SignUp from "./pages/user/SignUp";
+import ItemSignInContainer from "./pages/credentials/ItemSignInContainer";
+import ItemSignUpContainer from "./pages/credentials/ItemSignUpContainer";
 
 
 
@@ -29,27 +29,23 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   return (
-    <div className="container-lg">
+    <>
+      <GlobalStyles/>
       <BrowserRouter>
         <Routes>
           {/* LOGIN */}
           <Route path="/users">
-            <Route index element={<SignIn/>} />
-            <Route path="signup" element={<SignUp/>} />
+            <Route index element={<ItemSignInContainer/>} />
+            <Route path="signup" element={<ItemSignUpContainer/>} />
           </Route>
           <Route index element={
             <ProtectedRoute>
-              <Home/>
-            </ProtectedRoute>
-          } />
-          <Route path="/lab/:id" element={
-            <ProtectedRoute>
-              <Lab/>
+              <h1>Home</h1>
             </ProtectedRoute>
           } />
         </Routes>
       </BrowserRouter>
-    </div>
+    </>
   );
 }
 
