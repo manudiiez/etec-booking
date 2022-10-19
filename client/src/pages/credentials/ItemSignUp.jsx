@@ -5,6 +5,14 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const ItemSignUp = ({ handleChange, handleClick, loading, error, setConfirmPassword }) => {
+
+  // const handleValidateInput = (e) => {
+
+  //   carrito__card__form.tarjetaNombreInput.value = valorInput
+  //   .replace(/[0-9]/g, '')
+
+  // }
+
   return (
     <Container>
       <div className="container-lg">
@@ -15,18 +23,18 @@ const ItemSignUp = ({ handleChange, handleClick, loading, error, setConfirmPassw
             <p>Registrese con su email</p>
             <div></div>
           </div>
-          <form>
+          <form onSubmit={handleClick}>
             <div>
-              <label>Nombre completo <span>*</span></label>
-              <input type="text" placeholder='Nombre y apellido' name='fullname' onChange={handleChange} />
+              <label>Nombre y apellido <span>*</span></label>
+              <input type="text" placeholder='Nombre completo' name='fullname' onChange={handleChange} pattern="[a-zA\s]" />
             </div>
             <div>
               <label>Nombre de usuario <span>*</span></label>
-              <input type="text" placeholder='Nombre con el que va a figurar' name='username' onChange={handleChange} />
+              <input type="text" placeholder='Nombre con el que va a ingresar a la plataforma' name='username' onChange={handleChange} />
             </div>
             <div>
-              <label>Email <span>*</span></label>
-              <input type="email" placeholder='Email' name='email' onChange={handleChange} />
+              <label>Email <span>*</span> <span>(unicamente mail institucional)</span></label>
+              <input type="email" placeholder='Email' name='email' onChange={handleChange} pattern=".+@[eE][tT][eE][cC][.][uU][mM][.][eE][dD][uU][.][aA][rR]" />
             </div>
             <div>
               <label>Contraseña <span>*</span></label>
@@ -37,9 +45,9 @@ const ItemSignUp = ({ handleChange, handleClick, loading, error, setConfirmPassw
               <input type="password" placeholder='Confirmar contraseña' onChange={(e) => setConfirmPassword(e.target.value)} />
             </div>
             {
-              error ? <p className='error'>{error.message}</p> : <p>Acepto compartir mi nombre con los demas usuarios</p>
+              error && <p className='error'>{error.message}</p>
             }
-            <button type='submit' disabled={loading} onClick={handleClick}><span>Registrarse</span></button>
+            <button type='submit' disabled={loading}><span>Registrarse</span></button>
             <p>Ya esta registrado? <Link to='/'>Inicie sesion</Link></p>
           </form>
         </div>
@@ -107,6 +115,11 @@ const Container = styled.section`
           font-weight: 400;
           span{
             color: #d10000;
+            &:nth-child(2){
+              font-size: .8rem;
+              color: ${props => props.theme.color_2};
+
+            }
           }
         }
         input{
@@ -146,6 +159,8 @@ const Container = styled.section`
         cursor: pointer;
         position: relative;
         overflow: hidden;
+        margin-top: 2rem;
+
         span{
           position: relative;
           z-index: 10;

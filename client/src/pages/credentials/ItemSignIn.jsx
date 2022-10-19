@@ -25,7 +25,7 @@ const ItemSignIn = ({ handleChange, handleClick, loading,error }) => {
               <input type="password" name="password" placeholder='Contraseña' onChange={handleChange} />
             </div>
             {
-              error ? <p className='error'>{error.message}</p> : <p>Acepto compartir mi nombre con los demas usuarios</p>
+              error && <p className='error'>{error.message}</p>
             }
             
             <button type='submit' disabled={loading} onClick={handleClick}><span>Iniciar sesion</span></button>
@@ -133,6 +133,7 @@ const Container = styled.section`
         color: #fff;
         background: ${props => props.theme.color_3};
         border: none;
+        margin-top: 2rem;
         cursor: pointer;
         position: relative;
         overflow: hidden;
