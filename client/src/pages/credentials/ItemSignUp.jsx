@@ -2,9 +2,9 @@ import React from 'react'
 /* ---------------------------- STYLED-COMPONENTS --------------------------- */
 import styled from 'styled-components'
 /* ----------------------------- REACT-OUTER-DOM ---------------------------- */
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-const ItemSignUp = ({ handleChange, handleClick, loading, error }) => {
+const ItemSignUp = ({ handleChange, handleClick, loading, error, setConfirmPassword }) => {
   return (
     <Container>
       <div className="container-lg">
@@ -34,12 +34,12 @@ const ItemSignUp = ({ handleChange, handleClick, loading, error }) => {
             </div>
             <div>
               <label>Confirmar contraseña <span>*</span></label>
-              <input type="password" placeholder='Confirmar contraseña' />
+              <input type="password" placeholder='Confirmar contraseña' onChange={(e) => setConfirmPassword(e.target.value)} />
             </div>
             {
               error ? <p className='error'>{error.message}</p> : <p>Acepto compartir mi nombre con los demas usuarios</p>
             }
-            <button type='submit' onClick={handleClick}>Registrarse</button>
+            <button type='submit' disabled={loading} onClick={handleClick}><span>Registrarse</span></button>
             <p>Ya esta registrado? <Link to='/'>Inicie sesion</Link></p>
           </form>
         </div>
@@ -114,6 +114,8 @@ const Container = styled.section`
           font-size: 1rem;
           border: 1px solid ${props => props.theme.color_2};
           background-color: transparent;
+          color: ${props => props.theme.color_1};
+
         }
       }
       p{
@@ -125,6 +127,9 @@ const Container = styled.section`
           color: ${props => props.theme.color_3};
           text-decoration: none;
           font-weight: 600;
+          &:hover{
+            text-decoration: underline;
+          }
         }
         &.error{
           color: #d10000;
@@ -138,7 +143,31 @@ const Container = styled.section`
         color: #fff;
         background: ${props => props.theme.color_3};
         border: none;
-
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        span{
+          position: relative;
+          z-index: 10;
+          font-weight: 600;
+        }
+        &::before{
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 100%;
+          left: 0;
+          background-color: red;
+          transition: all .3s ;
+          background: ${props => props.theme.color_1};
+        }
+        &:hover{
+          &::before{
+            top: 0;
+          }
+          color: ${props => props.theme.bg_1};
+        }
       }
     }
   }

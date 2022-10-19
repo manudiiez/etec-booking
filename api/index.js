@@ -45,7 +45,7 @@ app.use('/api/auth', authRoute);
 app.use('/api/subject', subjectRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/lab', labRoute);
-app.use('/api/module', moduleRoute);
+app.use('/api/module', moduleRoute); 
 
 
 

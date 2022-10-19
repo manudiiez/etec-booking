@@ -35,7 +35,8 @@ const Container = styled.header`
         position: fixed;
         top: 0;
         left: 0;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 1px -10px, ${props => props.theme.color_1} 0px 3px 7px -3px;
+        border-bottom: 0.1px solid ${props => props.theme.color_3};
+        
         .container-lg{
             height: 100%;
             width: 100%;

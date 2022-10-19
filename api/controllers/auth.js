@@ -8,6 +8,14 @@ import { createError } from "../utils/error.js";
 
 export const register = async(req, res, next) => {
     try {
+        
+        const username = await User.findOne({username: req.body.username})
+        const email = await User.findOne({email: req.body.email})
+        
+        if(username || email) {
+            return next(createError(404, "This user already exists test with another user or email"))
+        }
+        
         const salt = bcrypt.genSaltSync(10)
         const hash = bcrypt.hashSync(req.body.password, salt)
 
@@ -15,12 +23,6 @@ export const register = async(req, res, next) => {
             ...req.body,
             password: hash
         })
-
-        const username = await User.findOne({username: req.body.username})
-        const email = await User.findOne({email: req.body.email})
-
-        if(username, email) return next(createError(404, "This user already exists test with another user or email"))
-
         await newUser.save()
         res.status(200).send('User has been created')
 

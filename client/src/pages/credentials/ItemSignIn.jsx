@@ -28,7 +28,7 @@ const ItemSignIn = ({ handleChange, handleClick, loading,error }) => {
               error ? <p className='error'>{error.message}</p> : <p>Acepto compartir mi nombre con los demas usuarios</p>
             }
             
-            <button type='submit' disabled={loading} onClick={handleClick}>Iniciar sesion</button>
+            <button type='submit' disabled={loading} onClick={handleClick}><span>Iniciar sesion</span></button>
             <p>Todavia no tiene un usuario? <Link to='signup'>Registrarse</Link></p>
           </form>
         </div>
@@ -85,7 +85,7 @@ const Container = styled.section`
 
     form{
       margin-top: 1rem;
-      div{
+      div{ 
         display: flex;
         flex-direction: column;
         border-radius: 2px;
@@ -103,6 +103,8 @@ const Container = styled.section`
           font-size: 1rem;
           border: 1px solid ${props => props.theme.color_2};
           background-color: transparent;
+          color: ${props => props.theme.color_1};
+          
         }
       }
       p{
@@ -114,6 +116,9 @@ const Container = styled.section`
           color: ${props => props.theme.color_3};
           text-decoration: none;
           font-weight: 600;
+          &:hover{
+            text-decoration: underline;
+          }
         }
 
         &.error{
@@ -128,7 +133,31 @@ const Container = styled.section`
         color: #fff;
         background: ${props => props.theme.color_3};
         border: none;
-
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        span{
+          position: relative;
+          z-index: 10;
+          font-weight: 600;
+        }
+        &::before{
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 100%;
+          left: 0;
+          background-color: red;
+          transition: all .3s ;
+          background: ${props => props.theme.color_1};
+        }
+        &:hover{
+          &::before{
+            top: 0;
+          }
+          color: ${props => props.theme.bg_1};
+        }
       }
     }
   }
