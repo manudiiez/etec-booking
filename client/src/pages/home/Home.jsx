@@ -1,8 +1,13 @@
 import React from 'react'
+import ItemHomeHeader from '../../components/ItemHomeHeader'
+import ItemReservasContainer from '../../components/reservas/ItemReservasContainer'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <>
+      <ItemHomeHeader/>
+      <ItemReservasContainer/>
+    </>
   )
 }
 

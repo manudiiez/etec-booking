@@ -35,6 +35,7 @@ const Container = styled.header`
         position: fixed;
         top: 0;
         left: 0;
+        z-index: 300;
         border-bottom: 0.1px solid ${props => props.theme.color_3};
         
         .container-lg{

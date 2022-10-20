@@ -26,7 +26,7 @@ const ItemSignUp = ({ handleChange, handleClick, loading, error, setConfirmPassw
           <form onSubmit={handleClick}>
             <div>
               <label>Nombre y apellido <span>*</span></label>
-              <input type="text" placeholder='Nombre completo' name='fullname' onChange={handleChange} pattern="[a-zA\s]" />
+              <input type="text" placeholder='Nombre completo' name='fullname' onChange={handleChange} pattern="^[a-zA-Z ]+$" />
             </div>
             <div>
               <label>Nombre de usuario <span>*</span></label>

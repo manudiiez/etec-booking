@@ -14,6 +14,7 @@ import { GlobalStyles } from "./theme/theme";
 import ItemSignInContainer from "./pages/credentials/ItemSignInContainer";
 import ItemSignUpContainer from "./pages/credentials/ItemSignUpContainer";
 import ItemNavbarContainer from "./components/navbar/ItemNavbarContainer";
+import Home from "./pages/home/Home";
 
 
 
@@ -42,7 +43,7 @@ function App() {
           </Route>
           <Route index element={
             <ProtectedRoute>
-              <h1>Home</h1>
+              <Home/>
             </ProtectedRoute>
           } />
         </Routes>
