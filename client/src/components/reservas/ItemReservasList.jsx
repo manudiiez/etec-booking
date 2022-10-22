@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 /* ---------------------------- STYLED-COMPONENTS --------------------------- */
 import styled from 'styled-components'
 /* ------------------------------ REACT-SELECT ------------------------------ */
@@ -14,11 +14,14 @@ const options = [
 ]
 
 const ItemReservasList = ({ loading, data, reFetch }) => {
+
+    const [category, setCategory] = useState('');
+
     return (
         <Container>
             <div className="container-lg">
                 <h1>Materias</h1>
-                <Select className='selectable' options={options} />
+                <Select className='selectable' options={options}  />
                 { loading ? (
                         <Loader />
                     ):(

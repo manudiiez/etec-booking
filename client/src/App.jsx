@@ -15,6 +15,7 @@ import ItemSignInContainer from "./pages/credentials/ItemSignInContainer";
 import ItemSignUpContainer from "./pages/credentials/ItemSignUpContainer";
 import ItemNavbarContainer from "./components/navbar/ItemNavbarContainer";
 import Home from "./pages/home/Home";
+import Lab from "./pages/lab/Lab";
 
 
 
@@ -41,11 +42,19 @@ function App() {
             <Route index element={<ItemSignInContainer/>} />
             <Route path="signup" element={<ItemSignUpContainer/>} />
           </Route>
-          <Route index element={
-            <ProtectedRoute>
-              <Home/>
-            </ProtectedRoute>
-          } />
+          <Route path="/">
+            <Route index element={
+              <ProtectedRoute>
+                <Home/>
+              </ProtectedRoute>
+            } />
+            <Route path="lab/:id" element={
+              <ProtectedRoute>
+                <Lab/>
+              </ProtectedRoute>
+            } />
+
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
