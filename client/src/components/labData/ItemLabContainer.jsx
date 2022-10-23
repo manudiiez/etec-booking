@@ -86,6 +86,11 @@ const Container = styled.div`
                 font-weight: 600;
                 border: none;
                 border-radius: 5px;
+                transition: all .3s ease-in-out;
+                cursor: pointer;
+                &:hover{
+                    transform: scale(1.03);
+                }
 
             }
         }

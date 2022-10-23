@@ -8,6 +8,8 @@ import { useParams } from 'react-router-dom';
 /* ------------------------------- COMPONENTS ------------------------------- */
 import Loader from '../../components/Loader.jsx';
 import ItemLabContainer from '../../components/labData/ItemLabContainer.jsx';
+import ItemCalendarContainer from '../../components/labData/ItemCalendarContainer.jsx';
+import ItemModuleContainer from '../../components/labData/ItemModuleContainer.jsx';
 
 const Lab = () => {
 
@@ -22,7 +24,11 @@ const Lab = () => {
                     loading ? (
                         <Loader/>
                     ):(
-                        <ItemLabContainer data={data} />
+                        <>
+                            <ItemLabContainer data={data} />
+                            <ItemCalendarContainer/>
+                            <ItemModuleContainer labId={data._id}/>
+                        </>
                     )
                 }
             </div>
@@ -36,4 +42,5 @@ const Container = styled.div`
     
     background-color: ${props => props.theme.bg_1};
     padding: 0 1rem;
+    min-height: 96.2vh;
 `
