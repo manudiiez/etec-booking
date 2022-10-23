@@ -43,8 +43,5 @@ export default ItemCalendarContainer
 
 const Container = styled.div`
     
-    .cal{
-        background-color: red;
-    }
 
 `

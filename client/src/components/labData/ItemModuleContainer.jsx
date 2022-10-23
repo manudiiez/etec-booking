@@ -3,8 +3,12 @@ import React, { useEffect, useState } from 'react'
 import useFetch from "../../hooks/useFetch";
 /* ---------------------------------- AXIOS --------------------------------- */
 import axios from "axios";
-import ItemModuleRangeCalendar from './ItemModuleRangeCalendar';
+/* ---------------------------- STYLED-COMPONENTS --------------------------- */
 import styled from 'styled-components';
+/* ---------------------------- REACT-ROUTER-DOM ---------------------------- */
+import {useNavigate} from 'react-router-dom'
+/* ------------------------------- COMPONENTS ------------------------------- */
+import ItemModuleRangeCalendar from './ItemModuleRangeCalendar';
 import ItemModule from './ItemModule';
 
 
@@ -20,6 +24,8 @@ const ItemModuleContainer = ({ labId }) => {
             key: "selection",
         }
     ]);
+
+    const navigate = useNavigate()
 
 
     const { data, loading, error } = useFetch(`/lab/module/${labId}`);
@@ -81,6 +87,26 @@ const ItemModuleContainer = ({ labId }) => {
         );
     };
 
+    const handleClick = async () => {
+        console.log('reservar')
+        try {
+            await Promise.all(
+                selectedModules.map((module) => {
+                    alldates.map((selectedDate) => {
+                        const start = new Date(selectedDate).setHours()
+                        const res = axios.put(`/module/availability/${module}`, {
+                            subjectName: 'programacion',
+                            teacherName: 'manudiiez',
+                            date: selectedDate,
+                        });
+                        return res.data;
+                    })
+                })
+            );
+            navigate("/");
+        } catch (err) { }
+    };
+
 
     useEffect(() => {
         if (data) {
@@ -94,7 +120,7 @@ const ItemModuleContainer = ({ labId }) => {
                 <ItemModuleRangeCalendar setDates={setDates} dates={dates} />
                 <ItemModule data={data} loading={loading} error={error} isAvalible={isAvalible} handleSelect={handleSelect} />
             </div>
-            <button className='btn'>Reservar</button>
+            <button className='btn' onClick={handleClick}>Reservar</button>
         </Container>
     )
 }
