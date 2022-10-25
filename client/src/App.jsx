@@ -16,6 +16,7 @@ import ItemSignUpContainer from "./pages/credentials/ItemSignUpContainer";
 import ItemNavbarContainer from "./components/navbar/ItemNavbarContainer";
 import Home from "./pages/home/Home";
 import Lab from "./pages/lab/Lab";
+import DefaultContainer from "../../admin/src/components/default/defaultContainer";
 
 
 
@@ -45,13 +46,17 @@ function App() {
           <Route path="/">
             <Route index element={
               <ProtectedRoute>
-                <Home/>
+                <DefaultContainer>
+                  <Home/>
+                </DefaultContainer>
               </ProtectedRoute>
             } />
             <Route path="lab/:id" element={
               <ProtectedRoute>
                 <Lab/>
               </ProtectedRoute>
+
+              
             } />
 
           </Route>

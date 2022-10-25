@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 /* ---------------------------- STYLED-COMPONENTS --------------------------- */
 import styled from 'styled-components'
 /* ---------------------------- REACT-ROUTER-DOM ---------------------------- */
@@ -6,9 +6,13 @@ import { NavLink } from 'react-router-dom'
 /* ------------------------------- FONTAWESOME ------------------------------ */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faUser, faList, faBook } from "@fortawesome/free-solid-svg-icons";
-
+/* --------------------------------- CONTEXT -------------------------------- */
+import { themeContext } from '../../context/ThemeContext';
 
 const ItemSidebarContainer = () => {
+
+    const {themeDark, themeLight} = useContext(themeContext)
+
     return (
         <Container>
             <div className="top">
@@ -44,7 +48,10 @@ const ItemSidebarContainer = () => {
                     </li>
                 </ul>
             </div>
-            <div className="bottom">asas</div>
+            <div className="bottom">
+                <div className='light' onClick={themeLight}></div>
+                <div className='dark' onClick={themeDark}></div>
+            </div>
         </Container>
     )
 }
@@ -68,11 +75,13 @@ const Container = styled.div`
         display: none;
         text-align: center;
         width: 100%;
+        margin: 0;
     }
     
     h2{
         text-align: center;
         width: 100%;
+        margin: 0;
         /* display: none; */
     }
 
@@ -120,10 +129,42 @@ const Container = styled.div`
         }
     }
 
+    .bottom{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 1rem;
+        div{
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            border: 1px solid #4b4b4b;
+            &.dark{
+                background-color: #374151;
+            }
+            &.light{
+                background-color: #d1d5db;
+            }
+        }
+    }
+
   @media (min-width: 768px){
     width: 180px;
-    span{
-        display: inline-block;
+    h1{
+        display: block;
+    }
+    h2{
+        display: none;
+    }
+    ul{
+        li{
+            a{
+                span{
+                    display: inline-block;
+                }
+            }
+        }
     }
   }
 `

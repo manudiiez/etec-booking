@@ -6,14 +6,19 @@ const themeContext = createContext();
 
 const ThemeContextProvider = ({children}) => {
 
-    const [theme, setTheme] = useState('dark');
+    const [theme, setTheme] = useState('light');
 
-    const themeToggler = () => {
-        theme === 'light' ? setTheme('dark') : setTheme('light')
+    const themeLight = () => {
+        setTheme('light')
+    }
+    const themeDark = () => {
+        setTheme('dark')
     }
 
+
+
     return (
-        <themeContext.Provider value={{themeToggler}}>
+        <themeContext.Provider value={{themeDark, themeLight}}>
             <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme }>
                 {children}
             </ThemeProvider>
