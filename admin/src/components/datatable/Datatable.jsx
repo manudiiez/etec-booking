@@ -3,6 +3,7 @@ import { userColumns, userRows } from "../../datatablesource";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import useFetch from '../../hooks/useFetch'
+import axios from "axios";
 
 /* ---------------------------- styled-components --------------------------- */
 import styled from 'styled-components'
@@ -12,12 +13,14 @@ const Datatable = ({columns}) => {
   const location = useLocation()
   const path = location.pathname.split('/')[1];
 
-  const {data, loading, error} = useFetch(`/${path}/`)
+  const {data, loading, error, reFetch} = useFetch(`/${path}/`)
 
 
-  const handleDelete = (id) => {
+  const handleDelete = async(id) => {
     console.log(id)
-    // setData(data.filter((item) => item.id !== id));
+    const lab = await axios.delete(`/${path}/${id}`)
+    console.log(lab)
+    reFetch()
   };
 
   const writeTable = () => {

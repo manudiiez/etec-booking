@@ -12,6 +12,25 @@ export const createLab = async (req, res, next) => {
         next(error)
     }
 }
+
+const createModule = async (body, id) => {
+    const newModule = new Module(body)
+    const labId = id
+
+    try {
+        const savedModule = await newModule.save()
+        try {
+            await Lab.findByIdAndUpdate(labId, {
+                $push: { modules: savedModule._id }
+            })
+        } catch (error) {
+            next(error)
+        }
+        res.status(200).json(savedModule)
+    } catch (error) {
+        next(error)
+    }
+}
 // UPDATE
 export const updateLab = async (req, res, next) => {
     try {

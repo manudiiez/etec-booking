@@ -7,6 +7,8 @@ import styled from "styled-components";
 import Select from 'react-select'
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import axios from "axios";
+import { modules } from "../../moduleData.js";
 
 const optionsLab = [
   { value: 'informatica', label: 'Informatica' },
@@ -33,7 +35,46 @@ const New = ({ inputs, title }) => {
     if( path === 'users'){
       setInfo((prev) => ({ ...prev, ['isAdmin']: e.value }));
     }else{
-      setInfo((prev) => ({ ...prev, ['category']: e.value }));
+      setInfo((prev) => ({ ...prev, ['type']: e.value }));
+    }
+  };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "upload");
+
+    try {
+      const uploadRes = await axios.post(
+        "https://api.cloudinary.com/v1_1/dykysdnj9/image/upload",
+        data
+      );
+
+      const {url} = uploadRes.data
+
+      if(path === 'users'){
+        
+        const newItem = {
+          ...info,
+          img: url
+        }
+        await axios.post('/auth/register', newItem)
+      }else{
+        
+        const newItem = {
+          ...info,
+          img: url
+        }
+        const lab = await axios.post('/lab', newItem)
+        
+        const list = await Promise.all(modules.map(async(module) => {
+          return await axios.post('/module/'+lab.data._id, module)
+        }))
+        console.log(list)
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -79,7 +120,7 @@ const New = ({ inputs, title }) => {
              ):(
                 <div className="formInput">
                   <label>Categoria</label>
-                  <Select onChange={handleChangeSelect} options={optionsLab} name='category' />
+                  <Select onChange={handleChangeSelect} options={optionsLab} name='type' />
                 </div>
              )
               }
@@ -94,7 +135,7 @@ const New = ({ inputs, title }) => {
                   style={{ display: "none" }}
                 />
               </div>
-              <button>Send</button>
+              <button onClick={handleClick}>Crear</button>
             </form>
           </div>
         </div>
