@@ -40,10 +40,10 @@ const ItemSignIn = ({ handleChange, handleClick, loading,error }) => {
 export default ItemSignIn
 
 const Container = styled.section`
-  background: ${props => props.theme.bg_1};
+  background: #FEFBF6;
   padding: 50px 1rem;
   h1{
-    color: ${props => props.theme.color_1};
+    color: #F89A40;
     margin: 0 auto;
     text-align: center;
     max-width: 768px;
@@ -71,7 +71,7 @@ const Container = styled.section`
       align-items: center;
       div{
         width: 75%;
-        border-bottom: 1px dashed ${props => props.theme.color_2};
+        border-bottom: 1px dashed #F89A40;
       }
       p{
         color: ${props => props.theme.color_2};
@@ -108,12 +108,12 @@ const Container = styled.section`
         }
       }
       p{
-        color: ${props => props.theme.color_2};
+        color: #000;
         text-align: center;
         font-size: 1rem;
         margin-top: 1rem;
         a{
-          color: ${props => props.theme.color_3};
+          color: #F89A40;
           text-decoration: none;
           font-weight: 600;
           &:hover{
@@ -131,7 +131,7 @@ const Container = styled.section`
         width: 100%;
         padding: 1rem 0;
         color: #fff;
-        background: ${props => props.theme.color_3};
+        background: #F89A40;
         border: none;
         margin-top: 2rem;
         cursor: pointer;
@@ -149,9 +149,8 @@ const Container = styled.section`
           height: 100%;
           top: 100%;
           left: 0;
-          background-color: red;
+          background-color: #000000;
           transition: all .3s ;
-          background: ${props => props.theme.color_1};
         }
         &:hover{
           &::before{
