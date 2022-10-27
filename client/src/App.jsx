@@ -15,6 +15,8 @@ import ItemSignInContainer from "./pages/credentials/ItemSignInContainer";
 import ItemSignUpContainer from "./pages/credentials/ItemSignUpContainer";
 import Home from "./pages/home/Home";
 import ItemNavbarContainer from "./components/navbar/ItemNavbarContainer";
+import ItemFooter from "./components/ItemFooter";
+import Lab from "./pages/lab/Lab";
 
 
 
@@ -48,7 +50,15 @@ function App() {
               </ProtectedRoute>
             } />
           </Route>
+          <Route path="/lab/:id">
+            <Route index element={
+              <ProtectedRoute>
+                <Lab/>
+              </ProtectedRoute>
+            } />
+          </Route>
         </Routes>
+        <ItemFooter/>
       </BrowserRouter>
     </>
   );

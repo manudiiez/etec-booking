@@ -18,6 +18,4 @@ export default Home
 
 const Container = styled.main`
     
-    height: 200vh;
-
 `

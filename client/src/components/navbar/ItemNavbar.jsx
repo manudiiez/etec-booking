@@ -12,7 +12,6 @@ const ItemNavbar = ({user}) => {
         <div className='container'>
             <nav className="container-lg">
                 <Link to='/'>EtecBooking</Link>
-                {/* <Link to={'/'}>Inicio</Link> */}
                 {
                     user && <ItemDropdown/>
                 }
@@ -33,6 +32,7 @@ const Container = styled.div`
         background-color: ${props => props.theme.white_2};
         border-bottom: 1px solid ${props => props.theme.orange};
         position: fixed;
+        z-index: 300;
         top: 0;
         left: 0;
         width: calc(100% - 2rem);
