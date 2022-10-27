@@ -124,6 +124,8 @@ const Container = styled.section`
         &.error{
           color: #d10000;
           font-weight: 600;
+          margin: 0;
+          margin-top: 2rem;
         }
       }
 

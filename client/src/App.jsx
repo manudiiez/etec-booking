@@ -14,6 +14,7 @@ import { GlobalStyles } from "./theme/theme";
 import ItemSignInContainer from "./pages/credentials/ItemSignInContainer";
 import ItemSignUpContainer from "./pages/credentials/ItemSignUpContainer";
 import Home from "./pages/home/Home";
+import ItemNavbarContainer from "./components/navbar/ItemNavbarContainer";
 
 
 
@@ -33,6 +34,7 @@ function App() {
     <>
       <GlobalStyles/>
       <BrowserRouter>
+        <ItemNavbarContainer/>
         <Routes>
           {/* LOGIN */}
           <Route path="/users">
