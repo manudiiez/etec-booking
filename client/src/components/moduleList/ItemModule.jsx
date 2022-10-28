@@ -8,7 +8,8 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import Loader from '../Loader';
 
-const ItemModule = ({data, loading, dates, setDates}) => {
+const ItemModule = ({data, loading, dates, setDates, isAvalible, handleSelect, handleClick}) => {
+    
 
     return (
         <Container>
@@ -16,9 +17,9 @@ const ItemModule = ({data, loading, dates, setDates}) => {
                 <div className="module-container">
                     <DateRange
                         editableDateInputs={true}
-                        onChange={item => setDates([item.selection])}
+                        onChange={item => setDates(item.selection)}
                         moveRangeOnFirstSelection={false}
-                        ranges={dates}
+                        ranges={[dates]}
                         className="date"
                     />
                     <div className="module-list">
@@ -31,7 +32,7 @@ const ItemModule = ({data, loading, dates, setDates}) => {
                                         data.map(item => (
                                             <li key={item._id}>
                                                 <span>{item.name}</span>
-                                                <input type="checkbox" />
+                                                <input type="checkbox" value={item._id} disabled={!isAvalible(item)} onChange={handleSelect} />
                                             </li>
                                         ))
                                     }
@@ -40,7 +41,7 @@ const ItemModule = ({data, loading, dates, setDates}) => {
                         }
                     </div>
                 </div>
-                <button className='button-send'>Reservar</button>
+                <button className='button-send' onClick={handleClick}>Reservar</button>
             </div>
         </Container>
     )
@@ -50,15 +51,19 @@ export default ItemModule
 
 const Container = styled.div`
     padding: 5rem 1rem;
-    background-color: ${props => props.theme.white_2};
     .container-lg{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         .module-container{
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: row;
             gap: 3rem;
-    
+            margin-bottom: 2rem;
+            
             .date{
                 width: fit-content;
                 height: 100%;
@@ -97,9 +102,13 @@ const Container = styled.div`
         }
 
         .button-send{
+            max-width: 746px;
             width: 100%;
             padding: 1rem 0;
             background-color: ${props => props.theme.orange};
+            border: none;
+            border-radius: 10px;
+            ${Text({ size: '1rem', color: props => props.theme.white, weight: '600' })}
 
         }
     }

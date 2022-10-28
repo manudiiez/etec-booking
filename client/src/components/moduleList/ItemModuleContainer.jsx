@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 /* ---------------------------------- AXIOS --------------------------------- */
 import axios from 'axios';
 /* ---------------------------- REACT-ROUTER-DOM ---------------------------- */
@@ -13,20 +13,27 @@ import { AuthContext } from "../../context/AuthContext";
 
 
 const ItemModuleContainer = ({ labId }) => {
+
+    const dateWithoutTime = () => {
+        let date = new Date();
+        date.setHours(0, 0, 0, 0);
+        return date;
+    };
+
     const [selectedModules, setSelectedModules] = useState([]);
-    const [dates, setDates] = useState([
-        {
-            startDate: new Date(),
-            endDate: new Date(),
-            key: "selection",
-        },
-    ]);
+    const [dates, setDates] = useState({
+        startDate: dateWithoutTime(),
+        endDate: dateWithoutTime(),
+        key: "selection",
+    });
 
     const navigate = useNavigate()
 
     const { user } = useContext(AuthContext)
 
     const { data, loading, error } = useFetch(`/lab/module/${labId}`);
+
+
 
     const getDatesInRange = (startDate, endDate) => {
         const start = new Date(startDate);
@@ -43,9 +50,10 @@ const ItemModuleContainer = ({ labId }) => {
         return list;
     };
 
-    const alldates = getDatesInRange(dates[0].startDate, dates[0].endDate);
+    const alldates = getDatesInRange(dates.startDate, dates.endDate);
 
     const isAvalible = (dateNumber) => {
+
         const isFound = dateNumber.unavailableDates.some((date) =>
             alldates.includes(new Date(date.date).getTime())
         );
@@ -69,7 +77,6 @@ const ItemModuleContainer = ({ labId }) => {
             await Promise.all(
                 selectedModules.map((module) => {
                     alldates.map((selectedDate) => {
-                        const start = new Date(selectedDate).setHours()
                         const res = axios.put(`/module/availability/${module}`, {
                             subjectName: 'programacion',
                             teacherName: user.fullname,
@@ -82,8 +89,6 @@ const ItemModuleContainer = ({ labId }) => {
             navigate("/");
         } catch (err) { }
     };
-
-    
 
     return (
         <ItemModule data={data} loading={loading} dates={dates} setDates={setDates} isAvalible={isAvalible} handleSelect={handleSelect} handleClick={handleClick} />
