@@ -17,6 +17,7 @@ import Home from "./pages/home/Home";
 import ItemNavbarContainer from "./components/navbar/ItemNavbarContainer";
 import ItemFooter from "./components/ItemFooter";
 import Lab from "./pages/lab/Lab";
+import User from "./pages/user/User";
 
 
 
@@ -54,6 +55,13 @@ function App() {
             <Route index element={
               <ProtectedRoute>
                 <Lab/>
+              </ProtectedRoute>
+            } />
+          </Route>
+          <Route path="/subjects">
+            <Route index element={
+              <ProtectedRoute>
+                <User/>
               </ProtectedRoute>
             } />
           </Route>

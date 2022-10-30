@@ -1,5 +1,5 @@
 import express from 'express'
-import { createLab, deleteLab, getAllLabs, getLab, getLabModules, updateLab } from '../controllers/lab.js'
+import { createLab, deleteLab, getAllLabs, getLab, getLabEvents, getLabModules, updateLab } from '../controllers/lab.js'
 import { verifyAdmin } from '../utils/verifyToken.js'
 
 const router = express.Router()
@@ -15,6 +15,7 @@ router.get('/:id', getLab)
 // GET ALL
 router.get('/', getAllLabs)
 router.get('/module/:labid', getLabModules)
+router.get('/events/:labid', getLabEvents)
 
 
 export default router

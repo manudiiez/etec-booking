@@ -72,3 +72,18 @@ export const getAllSubjects = async (req, res, next) => {
         next(error)
     }
 }
+export const getAllSubjectsTeacher = async (req, res, next) => {
+
+    const userId = req.params.userid
+
+    try {
+        const user = await User.findById(userId)
+        const list = await Promise.all(user.subjects.map(subject => {
+            return Subject.findById(subject)
+        }))
+        res.status(200).json(list)
+
+    } catch (error) {
+        next(error)
+    }
+}

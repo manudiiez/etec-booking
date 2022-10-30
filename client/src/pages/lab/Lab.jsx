@@ -2,6 +2,7 @@ import React from 'react'
 /* ---------------------------- REACT-ROUTER-DOM ---------------------------- */
 import { useParams } from 'react-router-dom'
 import ItemLabHeader from '../../components/ItemLabHeader';
+import ItemLabCalendarContainer from '../../components/labCalendar/ItemLabCalendarContainer';
 import Loader from '../../components/Loader';
 import ItemModuleContainer from '../../components/moduleList/ItemModuleContainer';
 /* ---------------------------------- HOOKS --------------------------------- */
@@ -24,6 +25,7 @@ const Lab = () => {
                     <>
                         <ItemLabHeader data={data}/>
                         <ItemModuleContainer labId={data._id}/>
+                        <ItemLabCalendarContainer labId={data._id}/>
                     </>
                 )
             }

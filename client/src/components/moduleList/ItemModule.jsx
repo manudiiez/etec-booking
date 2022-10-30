@@ -60,12 +60,12 @@ const Container = styled.div`
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: row;
+            flex-direction: column;
             gap: 3rem;
             margin-bottom: 2rem;
-            
             .date{
                 width: fit-content;
+                max-width: calc(100vw - 2rem);
                 height: 100%;
                 box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
                 border-radius: 10px;
@@ -75,7 +75,9 @@ const Container = styled.div`
             .module-list{
                 box-sizing: border-box;
                 height: 385px;
-                width: 352px;
+                width: auto;
+                min-width: 200px;
+                max-width: 352px;
                 background-color: ${props => props.theme.white};
                 padding: 1rem;
                 border-radius: 10px;
@@ -110,6 +112,15 @@ const Container = styled.div`
             border-radius: 10px;
             ${Text({ size: '1rem', color: props => props.theme.white, weight: '600' })}
 
+        }
+    }
+
+    @media (min-width: 768px) {
+        padding: 7rem 1rem;
+        .container-lg{
+            .module-container{
+                flex-direction: row;
+            }
         }
     }
 `

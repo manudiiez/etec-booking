@@ -1,5 +1,5 @@
 import express from 'express'
-import { createSubject, deleteSubject, getAllSubjects, getSubject, updateSubject } from '../controllers/subject.js'
+import { createSubject, deleteSubject, getAllSubjects, getAllSubjectsTeacher, getSubject, updateSubject } from '../controllers/subject.js'
 /* ----------------------------- ERROR FUNCTION ----------------------------- */
 import { verifyAdmin, verifyUser } from '../utils/verifyToken.js'
 
@@ -16,5 +16,6 @@ router.delete('/:id/:userid', verifyAdmin, deleteSubject)
 router.get('/:id/:userid', verifyAdmin, getSubject)
 // GET ALL
 router.get('/', getAllSubjects)
+router.get('/:userid', getAllSubjectsTeacher)
 
 export default router 

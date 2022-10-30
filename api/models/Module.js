@@ -23,6 +23,7 @@ const moduleSchema = new mongoose.Schema({
     },
     unavailableDates: [{
         subjectName: String, 
+        subjectType: String, 
         teacherName: String, 
         date: Date
     }]
