@@ -58,7 +58,7 @@ function App() {
               </ProtectedRoute>
             } />
           </Route>
-          <Route path="/subjects">
+          <Route path="/user">
             <Route index element={
               <ProtectedRoute>
                 <User/>

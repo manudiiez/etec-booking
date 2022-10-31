@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 /* --------------------------------- CONTEXT -------------------------------- */
 import { AuthContext } from '../../context/AuthContext'
 /* ------------------------------- COMPONENTS ------------------------------- */
-import ItemUserHeader from '../../components/ItemUserHeader'
 import ItemSubjectListContainer from '../../components/subjectList/ItemSubjectListContainer'
+import ItemUserHeaderContainer from '../../components/userHeader/ItemUserHeaderContainer'
 
 const User = () => {
 
@@ -11,7 +11,7 @@ const User = () => {
 
     return (
         <section>
-            <ItemUserHeader user={user}/>
+            <ItemUserHeaderContainer user={user}/>
             <ItemSubjectListContainer userId={user._id}/>
         </section>
     )

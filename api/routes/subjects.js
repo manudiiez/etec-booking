@@ -9,13 +9,13 @@ const router = express.Router()
 router.post('/:userid', verifyAdmin, createSubject)
 
 // UPDATE
-router.put('/:id/:userid', verifyAdmin, updateSubject)
+router.put('/:id', verifyAdmin, updateSubject)
 // DELETE
 router.delete('/:id/:userid', verifyAdmin, deleteSubject)
 // GET
-router.get('/:id/:userid', verifyAdmin, getSubject)
+router.get('/:id', verifyAdmin, getSubject)
 // GET ALL
 router.get('/', getAllSubjects)
-router.get('/:userid', getAllSubjectsTeacher)
+router.get('/teacher/:userid', getAllSubjectsTeacher)
 
-export default router 
+export default router  
