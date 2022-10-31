@@ -24,6 +24,7 @@ const moduleSchema = new mongoose.Schema({
     unavailableDates: [{
         subjectName: String, 
         subjectType: String, 
+        subjectAge: Number, 
         teacherName: String, 
         date: Date
     }]

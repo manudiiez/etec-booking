@@ -12,33 +12,37 @@ import ItemModal from '../modal/ItemModal'
 
 const options = [
     { value: 'informatica', label: 'Informatica' },
-    { value: 'electronica', label: 'Electronica' }
+    { value: 'electronica', label: 'Electronica' },
+    { value: 'otros', label: 'Otros' }
 ]
 
-const ItemSubjectList = ({ data, loading, error, handleChange, setSubject, subjectData, submit, modal, changeModal,changeSelect }) => {
+const ItemSubjectList = ({ data, loading, error, handleChange, setSubject, subjectData, submit, modal, changeModal,changeSelect,errorMsj }) => {
     return (
         <Container>
             <div className="container-lg">
                 <ItemModal modal={modal} change={changeModal}>
                     <ModalBody>
                         <p className="title">
-                            Editar <span>Perfil</span>
+                            Editar <span>Materia</span>
                         </p>
-                        <div className='form'>
+                        <form className='form'>
                             <div className="controls">
                                 <label>Nombre de la materia</label>
-                                <input type="text" value={subjectData.name} name='name' onChange={handleChange}  />
+                                <input type="text" value={subjectData.name} name='name' onChange={handleChange} required />
                             </div>
                             <div className="controls">
                                 <label>Año</label>
-                                <input type="number" name='age' value={subjectData.age} onChange={handleChange}  />
+                                <input type="number" name='age' value={subjectData.age} onChange={handleChange} required />
                             </div>
                             <div className="controls">
                                 <label>Tipo</label>
                                 <Select className='select' options={options} onChange={changeSelect} />
                             </div>
-                            <button onClick={submit}>Editar</button>
-                        </div>
+                            {
+                                errorMsj && <p className='error'>{errorMsj}</p>
+                            }
+                            <button type='submit' onClick={submit}>Editar</button>
+                        </form>
                     </ModalBody>
                 </ItemModal>
                 <h6>Mis <span>Materias</span></h6>
@@ -72,7 +76,8 @@ const ItemSubjectList = ({ data, loading, error, handleChange, setSubject, subje
 export default ItemSubjectList
 
 const Container = styled.div`
-    padding: 5rem 1rem;  
+    padding: 5rem 1rem; 
+    padding-bottom: 0; 
     .container-lg{
         h6{
             ${Text({ size: '1.8rem', color: props => props.theme.black, weight: '600' })}
@@ -169,26 +174,14 @@ const Container = styled.div`
                     right: 1rem;
                 }
 
-                /* .bg{
-                    display: none;
-                    position:absolute;
-                    width: 100%;
-                    height: 100%;
-                    top: 0;
-                    left: 0;
-                    background-color: rgba(248, 153, 64, 0.8);
-                    border-radius: 0 0.5rem 0.5rem 0.5rem;
-                    justify-content: center;
-                    align-items: center;
-                    ${Text({ size: '2rem', color: props => props.theme.white, weight: '700' })}
-
-                } */
 
                 + li {
                     margin-top: 2rem;
                 }
             }
         }
+
+
     }
 
 `
@@ -224,6 +217,11 @@ const ModalBody = styled.div`
                 margin-top: 1rem;
                 margin-bottom: 3rem;
             }
+        }
+
+        .error{
+            ${Text({ size: '1rem', color: props => props.theme.red, weight: '600' })}
+            text-align: center;
         }
 
         button{

@@ -7,6 +7,7 @@ export const theme = {
     orange: "#F89A40",
     gray: "#33363A",
     black: "#000000",
+    red: "#ce0202",
 }
 
 export const GlobalStyles = createGlobalStyle`
@@ -14,6 +15,21 @@ export const GlobalStyles = createGlobalStyle`
         max-width: 1180px;
         width: 100%;
         margin: auto;
+    }
+
+    .scollbar{
+        &::-webkit-scrollbar {
+            width: 5px;              
+        }
+
+        &::-webkit-scrollbar-track {
+            background-color: #FEFBF6;        
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #f89940b4;    
+            border-radius: 20px;     
+        }
     }
 `
 

@@ -2,14 +2,18 @@ import React, { useState } from 'react'
 /* ---------------------------- STYLED-COMPONENTS --------------------------- */
 import styled from 'styled-components'
 import { Text } from '../../theme/theme'
+
 /* ------------------------------- RANGE-DATE ------------------------------- */
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
+/* ------------------------------- COMPONENTS ------------------------------- */
 import Loader from '../Loader';
+import ItemModal from '../modal/ItemModal';
+import ItemModuleSelect from './ItemModuleSelect';
 
-const ItemModule = ({data, loading, dates, setDates, isAvalible, handleSelect, handleClick}) => {
-    
+const ItemModule = ({ data, loading, dates, setDates, isAvalible, handleSelect, handleClick, modal, changeModal, datesView, selectedModulesView, user, handleChangeSelect }) => {
+
 
     return (
         <Container>
@@ -25,14 +29,14 @@ const ItemModule = ({data, loading, dates, setDates, isAvalible, handleSelect, h
                     <div className="module-list">
                         {
                             loading ? (
-                                <Loader/>
-                            ):(
+                                <Loader />
+                            ) : (
                                 <ul>
                                     {
                                         data.map(item => (
                                             <li key={item._id}>
                                                 <span>{item.name}</span>
-                                                <input type="checkbox" value={item._id} disabled={!isAvalible(item)} onChange={handleSelect} />
+                                                <input type="checkbox" value={item._id} name={item.name} disabled={!isAvalible(item)} onChange={handleSelect} />
                                             </li>
                                         ))
                                     }
@@ -41,7 +45,35 @@ const ItemModule = ({data, loading, dates, setDates, isAvalible, handleSelect, h
                         }
                     </div>
                 </div>
-                <button className='button-send' onClick={handleClick}>Reservar</button>
+                <button className='button-send' onClick={changeModal}>Reservar</button>
+                <ItemModal modal={modal} change={changeModal}>
+                    <ModalBody>
+                        <p className="title">
+                            Realizar <span>Reserva</span>
+                        </p>
+                        <div>
+                            <p>Dias</p>
+                            <ul>
+                                {
+                                    datesView.map(date => (
+                                        <li key={date}>{date}</li>
+                                    ))
+                                }
+                            </ul>
+                            <p>Modulos</p>
+                            <ul>
+                                {
+                                    selectedModulesView.map(modulev => (
+                                        <li key={modulev}>{modulev}</li>
+                                    ))
+                                }
+                            </ul>
+                            <p>Materia</p>
+                            <ItemModuleSelect user={user} handleChangeSelect={handleChangeSelect} />
+                            <button onClick={handleClick}>Confirmar reservar</button>
+                        </div>
+                    </ModalBody>
+                </ItemModal>
             </div>
         </Container>
     )
@@ -121,6 +153,53 @@ const Container = styled.div`
             .module-container{
                 flex-direction: row;
             }
+        }
+    }
+`
+
+
+const ModalBody = styled.div`
+    width: 100%;
+    .title{
+        ${Text({ size: '1.5rem', color: props => props.theme.black, weight: '600' })}
+        text-align: center;
+        span{
+            color: ${props => props.theme.orange};
+        }
+        margin-bottom: 3rem;
+    }
+    div{
+        p{
+            ${Text({ size: '1.3rem', color: props => props.theme.black, weight: '600' })}
+            text-align: center;
+            margin: 0;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            li{
+                width: auto;
+                background-color: ${props => props.theme.white};
+                padding: 1rem;
+                border-radius: 10px;
+                margin-bottom: 1rem;
+                box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+                ${Text({ size: '1rem', color: props => props.theme.black, weight: '600' })}
+            }
+        }
+        button{
+            width: 100%;
+            padding: 1rem 0;
+            border: none;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            border-radius: 10px;
+            background-color: ${props => props.theme.orange};
+            ${Text({ size: '1rem', color: props => props.theme.white_2, weight: '600' })}
+            margin-top: 2rem;
+            
         }
     }
 `

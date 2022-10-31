@@ -8,7 +8,7 @@ const ItemModal = ({ children, change, modal }) => {
     return (
         <Container className={modal && 'active'}>
             <div className="modal">
-                <div className='content'>
+                <div className='content scollbar'>
                     {children}
                 </div>
             </div>

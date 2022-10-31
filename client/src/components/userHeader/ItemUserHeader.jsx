@@ -5,7 +5,7 @@ import { Text } from '../../theme/theme'
 /* ------------------------------- COMPONENTS ------------------------------- */
 import ItemModal from '../modal/ItemModal'
 
-const ItemUserHeader = ({ user, changeModal, modal, handleChange, credentials, submit }) => {
+const ItemUserHeader = ({ user, changeModal, modal, handleChange, credentials, submit, errorMsj }) => {
 
     return (
         <Container>
@@ -14,21 +14,26 @@ const ItemUserHeader = ({ user, changeModal, modal, handleChange, credentials, s
                     <p className="title">
                         Editar <span>Perfil</span>
                     </p>
-                    <div className='form'>
+                    <form className='form'>
                         <div className="controls">
                             <label>Nombre de usuario</label>
-                            <input type="text" name='username' onChange={handleChange} value={credentials.username} />
+                            <input type="text" name='username' onChange={handleChange} value={credentials.username} required />
                         </div>
                         <div className="controls">
                             <label>Nombre y apellido</label>
-                            <input type="text" name='fullname' value={credentials.fullname} onChange={handleChange} />
+                            <input type="text" name='fullname' value={credentials.fullname} onChange={handleChange} required />
                         </div>
                         <div className="controls">
                             <label>Email</label>
-                            <input type="text" name='email' value={credentials.email} onChange={handleChange} />
+                            <input type="email" name='email' value={credentials.email} onChange={handleChange} required />
                         </div>
-                        <button onClick={submit}>Editar</button>
-                    </div>
+
+                        {
+                            errorMsj && <p className='error'>{errorMsj}</p>
+                        }
+
+                        <button type='submit' onClick={submit}>Editar</button>
+                    </form>
                 </ModalBody>
             </ItemModal>
             <h4>Mi <span>Perfil</span></h4>
@@ -207,6 +212,11 @@ const ModalBody = styled.div`
                 border-radius: 10px;
 
             }
+        }
+
+        .error{
+            ${Text({ size: '1rem', color: props => props.theme.red, weight: '600' })}
+            text-align: center;
         }
 
         button{

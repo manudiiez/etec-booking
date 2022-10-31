@@ -12,6 +12,7 @@ const ItemLabCalendarContainer = ({labId}) => {
         let date2 = new Date(date)
         let endDate2 = new Date(endDate)
         const date3 = `${date2.getDate()}/${date2.getMonth()}/${date2.getFullYear()} a las ${date2.getHours()}:${date2.getMinutes()} hasta las ${endDate2.getHours()}:${endDate2.getMinutes()}`
+        console.log(data)
         return date3
     }
 

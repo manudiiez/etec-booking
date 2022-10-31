@@ -1,5 +1,5 @@
 import express from 'express'
-import { createModule, deleteModule, getModule, updateModule, updateModuleAvailability } from '../controllers/module.js'
+import { createModule, deleteModule, getModule, getModuleBooking, updateModule, updateModuleAvailability } from '../controllers/module.js'
 import { verifyAdmin } from '../utils/verifyToken.js'
 
 const router = express.Router()
@@ -14,6 +14,7 @@ router.put("/availability/:id", updateModuleAvailability);
 router.delete('/:id/:labid',verifyAdmin, deleteModule)
 // GET
 router.get('/:id', getModule)
+router.get('/booking/:moduleid/:dateid', getModuleBooking)
 
  
 export default router

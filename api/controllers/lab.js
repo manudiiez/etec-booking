@@ -103,6 +103,8 @@ export const getLabEvents = async (req, res, next) => {
                 let endDate = new Date(item.date)
                 let date = {
                     subjectName: item.subjectName,
+                    subjectType: item.subjectType,
+                    subjectAge: item.subjectAge,
                     teacherName: item.teacherName,
                     date: item.date,
                     endDate: endDate,

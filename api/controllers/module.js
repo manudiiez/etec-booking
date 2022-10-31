@@ -55,11 +55,47 @@ export const deleteModule = async (req, res, next) => {
 // GET
 export const getModule = async (req, res, next) => {
     try {
-        const Module = await Module.findById(req.params.id)
-        res.status(200).json(Module)
+        const module = await Module.findById(req.params.id)
+        res.status(200).json(module)
     } catch (error) {
         next(error)
     }
+}
+// GET BOOKING
+export const getModuleBooking = async (req, res, next) => {
+
+    const moduleId = req.params.moduleid
+    const dateId = req.params.dateid
+
+    console.log(moduleId, dateId)
+
+    try {
+        const module = await Module.findById(moduleId)
+        const date = module.unavailableDates.filter(item => dateId === item._id)
+        res.status(200).json(module)
+
+        
+    } catch (error) {
+        
+    }
+
+    // try {
+    //     const module = await Module.findByIdAndUpdate(
+    //         {"_id" : moduleId, "unavailableDates._id" : dateId},
+    //         {$set : req.body},
+    //         { new: true }
+    //     )
+    //     res.status(200).json(module)
+    // } catch (error) {
+    //     next(error)
+    // }
+    
+    // try {
+    //     const module = await Module.findById(moduleId)
+    //     res.status(200).json(module)
+    // } catch (error) {
+    //     next(error)
+    // }
 }
 
 
