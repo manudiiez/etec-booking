@@ -69,19 +69,20 @@ export const getModuleBooking = async (req, res, next) => {
 
     console.log(moduleId, dateId)
 
-    try {
-        const module = await Module.findById(moduleId)
-        const date = module.unavailableDates.filter(item => dateId === item._id)
-        res.status(200).json(module)
+    // try {
+    //     const module = await Module.findById(moduleId)
+    //     const date = module.unavailableDates.filter(item => item.id === dateId)
+
+    //     res.status(200).json({"module": module, "date": date})
 
         
-    } catch (error) {
+    // } catch (error) {
         
-    }
+    // }
 
     // try {
-    //     const module = await Module.findByIdAndUpdate(
-    //         {"_id" : moduleId, "unavailableDates._id" : dateId},
+    //     const module = await Module.findByIdAndupUpdate(
+    //         {"_id" : moduleId, "unavailableDates.id" : dateId},
     //         {$set : req.body},
     //         { new: true }
     //     )
@@ -90,12 +91,16 @@ export const getModuleBooking = async (req, res, next) => {
     //     next(error)
     // }
     
-    // try {
-    //     const module = await Module.findById(moduleId)
-    //     res.status(200).json(module)
-    // } catch (error) {
-    //     next(error)
-    // }
+    try {
+        const module = await Module.updateMany({active: true}, {
+            $set : req.body
+        },{
+            arrayFilters: [{ "unavailableDates.id": dateId }] 
+        })
+        res.status(200).json(module)
+    } catch (error) {
+        
+    }
 }
 
 
