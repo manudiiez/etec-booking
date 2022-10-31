@@ -16,7 +16,7 @@ const options = [
     { value: 'otros', label: 'Otros' }
 ]
 
-const ItemSubjectList = ({ data, loading, error, handleChange, setSubject, subjectData, submit, modal, changeModal,changeSelect,errorMsj }) => {
+const ItemSubjectList = ({ data, loading, error, handleChange, setSubject, subjectData, submit, modal, changeModal,changeSelect,errorMsj, onDelete }) => {
     return (
         <Container>
             <div className="container-lg">
@@ -42,6 +42,7 @@ const ItemSubjectList = ({ data, loading, error, handleChange, setSubject, subje
                                 errorMsj && <p className='error'>{errorMsj}</p>
                             }
                             <button type='submit' onClick={submit}>Editar</button>
+                            <button type='submit' onClick={onDelete}>Eliminar</button>
                         </form>
                     </ModalBody>
                 </ItemModal>
@@ -233,6 +234,11 @@ const ModalBody = styled.div`
             background-color: ${props => props.theme.orange};
             ${Text({ size: '1rem', color: props => props.theme.white_2, weight: '600' })}
             
+            &:nth-of-type(2){
+                margin-top: 1rem;
+                background-color: ${props => props.theme.red};
+
+            }
         }
     }
 `

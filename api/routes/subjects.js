@@ -6,14 +6,14 @@ import { verifyAdmin, verifyUser } from '../utils/verifyToken.js'
 const router = express.Router()
 
 // CREATE
-router.post('/:userid', verifyAdmin, createSubject)
+router.post('/:userid', verifyUser, createSubject)
 
 // UPDATE
-router.put('/:id', verifyAdmin, updateSubject)
+router.put('/:id/:userid', verifyUser, updateSubject)
 // DELETE
-router.delete('/:id/:userid', verifyAdmin, deleteSubject)
+router.delete('/:id/:userid', verifyUser, deleteSubject)
 // GET
-router.get('/:id', verifyAdmin, getSubject)
+router.get('/:id', verifyUser, getSubject)
 // GET ALL
 router.get('/', getAllSubjects)
 router.get('/teacher/:userid', getAllSubjectsTeacher)

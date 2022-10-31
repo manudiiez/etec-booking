@@ -38,7 +38,7 @@ const ItemSubjectListContainer = ({userId}) => {
             setErrorMsj('Debe completar los campos')
         }else{
             try {
-                const res = await axios.put(`/subject/${subject._id}`, subject);
+                const res = await axios.put(`/subject/${subject._id}/${userId}`, subject);
                 navigate("/");
             } catch (err) {
                 console.log(err)
@@ -46,8 +46,18 @@ const ItemSubjectListContainer = ({userId}) => {
         }
     }
 
+    const onDelete = async (e) => {
+        e.preventDefault()
+        try {
+            await axios.delete(`/subject/${subject._id}/${userId}`, subject);
+            navigate("/");
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
-        <ItemSubjectList handleChange={handleChange} setSubject={setSubject} subjectData={subject} data={data} loading={loading} error={error} submit={onSubmit} modal={modalState} changeModal={changeModalState} changeSelect={handleChangeSelect} errorMsj={errorMsj} />
+        <ItemSubjectList handleChange={handleChange} setSubject={setSubject} subjectData={subject} data={data} loading={loading} error={error} submit={onSubmit} modal={modalState} changeModal={changeModalState} changeSelect={handleChangeSelect} errorMsj={errorMsj} onDelete={onDelete} />
     )
 }
 
