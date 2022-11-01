@@ -94,13 +94,10 @@ const ItemModuleContainer = ({ labId }) => {
 
     //     return !isFound;
     // };
-    const isAvalible = async(dateNumber) => {
-
-        const bookingList = []
+    const isAvalible2 = async(dateNumber) => {
 
         try {
             const res = await axios.get(`/booking/${dateNumber._id}`)
-            bookingList.push(...res.data)
             
             const isFound = await res.data.some((date) =>
                 alldates.includes(new Date(date.date).getTime())
@@ -114,6 +111,15 @@ const ItemModuleContainer = ({ labId }) => {
             console.log(error)
         }   
     };
+
+    const isAvalible = (dateNumber) => {
+        isAvalible2(dateNumber)
+        .then(function(result){
+            console.log(result)
+            return result
+        })
+
+    }
 
 
     const handleSelect = (e) => {
