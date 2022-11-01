@@ -17,10 +17,14 @@ const bookingSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    teacherId: {
+        type: String,
+        required: true,
+    },
     date: {
         type: Date,
         required: true
     }
 });
 
-export default mongoose.model('Booking', bookingSchema)
+export default mongoose.model('Booking', bookingSchema) 
