@@ -11,8 +11,9 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import Loader from '../Loader';
 import ItemModal from '../modal/ItemModal';
 import ItemModuleSelect from './ItemModuleSelect';
+import ItemInputComponent from './ItemInputComponent';
 
-const ItemModule = ({ data, loading, dates, setDates, isAvalible, handleSelect, handleClick, modal, changeModal, datesView, selectedModulesView, user, handleChangeSelect }) => {
+const ItemModule = ({ data, loading, dates, setDates, isAvalible, handleSelect, handleClick, modal, changeModal, datesView, selectedModulesView, user, handleChangeSelect, alldates }) => {
 
 
     return (
@@ -36,7 +37,8 @@ const ItemModule = ({ data, loading, dates, setDates, isAvalible, handleSelect, 
                                         data.map(item => (
                                             <li key={item._id}>
                                                 <span>{item.name}</span>
-                                                <input type="checkbox" value={item._id} name={item.name} disabled={isAvalible(item)}  onChange={() => console.log(isAvalible(item))} />
+                                                <ItemInputComponent item={item} isAvalible={isAvalible} handleSelect={handleSelect} alldates={alldates} />
+                                                {/* <input type="checkbox" value={item._id} name={item.name}  onChange={() => console.log(isAvalible(item))} /> */}
                                             </li>
                                         ))
                                     }

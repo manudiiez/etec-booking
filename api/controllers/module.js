@@ -1,5 +1,6 @@
 import Module from '../models/Module.js'
 import Lab from '../models/Lab.js'
+import Booking from '../models/Booking.js'
  
 
 // CREATE
@@ -77,6 +78,7 @@ export const getModuleBooking = async (req, res, next) => {
 
         
     } catch (error) {
+        next(error)
         
     }
 

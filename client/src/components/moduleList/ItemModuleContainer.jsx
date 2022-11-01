@@ -94,32 +94,55 @@ const ItemModuleContainer = ({ labId }) => {
 
     //     return !isFound;
     // };
-    const isAvalible2 = async(dateNumber) => {
+    // const isAvalible2 = async(dateNumber) => {
 
+    //     try {
+    //         const res = await axios.get(`/booking/${dateNumber._id}`)
+            
+    //         const isFound = await res.data.some((date) =>
+    //             alldates.includes(new Date(date.date).getTime())
+    //         );
+    
+    //         console.log(dateNumber.name, isFound)
+    
+    //         return isFound;
+            
+    //     } catch (error) {
+    //         console.log(error)
+    //     }   
+    // };
+    const isAvalible = async(dateNumber) => {
+        console.log(alldates)
         try {
-            const res = await axios.get(`/booking/${dateNumber._id}`)
-            
-            const isFound = await res.data.some((date) =>
-                alldates.includes(new Date(date.date).getTime())
-            );
-    
-            console.log(dateNumber.name, isFound)
-    
-            return isFound;
-            
+            const res = await axios.post(`/booking/availability/${dateNumber._id}`, {
+                dates: alldates
+            })
+            return res.data;
         } catch (error) {
             console.log(error)
         }   
     };
+    // const isAvalible = (dateNumber) => {
 
-    const isAvalible = (dateNumber) => {
-        isAvalible2(dateNumber)
-        .then(function(result){
-            console.log(result)
-            return result
-        })
+    //     axios.get(`/booking/${dateNumber._id}`).
+    //     then((result) => {
+    //         const isFound = result.data.some((date) =>
+    //             alldates.includes(new Date(date.date).getTime())
+    //         )
+    //         console.log(isFound)
+    //         return isFound
+    //     });
+    
+    // };
 
-    }
+    // const isAvalible = (dateNumber) => {
+    //     isAvalible2(dateNumber)
+    //     .then(function(result){
+    //         console.log('result', result)
+    //         return result
+    //     })
+
+    // }
 
 
     const handleSelect = (e) => {
@@ -181,7 +204,7 @@ const ItemModuleContainer = ({ labId }) => {
     
 
     return (
-        <ItemModule data={data} loading={loading} dates={dates} setDates={setDates} isAvalible={isAvalible} handleSelect={handleSelect} handleClick={handleClick} modal={modalState} changeModal={changeModalState} datesView={datesView} selectedModulesView={selectedModulesView} user={user} handleChangeSelect={handleChangeSelect} />
+        <ItemModule data={data} loading={loading} dates={dates} setDates={setDates} isAvalible={isAvalible} handleSelect={handleSelect} handleClick={handleClick} modal={modalState} changeModal={changeModalState} datesView={datesView} selectedModulesView={selectedModulesView} user={user} handleChangeSelect={handleChangeSelect} alldates={alldates} />
     )
 }
 

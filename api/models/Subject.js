@@ -19,4 +19,4 @@ const subjectSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model('Subject', subjectSchema) 
+export default mongoose.model('Subject', subjectSchema)  

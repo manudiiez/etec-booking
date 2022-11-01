@@ -185,3 +185,31 @@ export const getModuleBookings = async (req, res, next) => {
         next(error)
     }
 }
+export const getModuleBookingsAvailability = async (req, res, next) => {
+    const moduleId = req.params.moduleid
+    const allDates = req.body.dates
+    try {
+        const module = await Module.findById(moduleId)
+        const listBooking = await Promise.all(module.unavailableDates.map(booking => {
+            return Booking.findById(booking)
+        }))
+
+        const listDate = []
+
+        allDates.map(date => {
+            listBooking.map(book => {
+                const dateSearch = new Date(date * 1000).getTime()
+                const dateBooking = new Date(book.date * 1000).getTime()
+                if (dateSearch === dateBooking) {
+                    listDate.push(dateBooking)
+                }
+            })
+            
+        })
+        
+        res.status(200).json(listDate.length !== 0 ? true : false)
+
+    } catch (error) {
+        next(error)
+    }
+}

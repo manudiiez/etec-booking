@@ -14,7 +14,6 @@ router.put("/availability/:id", updateModuleAvailability);
 router.delete('/:id/:labid',verifyAdmin, deleteModule)
 // GET
 router.get('/:id', getModule)
-router.get('/booking/:moduleid/:dateid', getModuleBooking)
 
  
 export default router
