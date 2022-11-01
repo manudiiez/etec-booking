@@ -9,6 +9,7 @@ import labRoute from './routes/labs.js'
 import moduleRoute from './routes/modules.js'
 import subjectRoute from './routes/subjects.js'
 import usersRoute from './routes/users.js'
+import bookingRoute from './routes/booking.js'
 
 
 
@@ -46,6 +47,7 @@ app.use('/api/subject', subjectRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/lab', labRoute);
 app.use('/api/module', moduleRoute); 
+app.use('/api/booking', bookingRoute); 
 
 
 

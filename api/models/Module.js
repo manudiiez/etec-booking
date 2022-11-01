@@ -21,13 +21,9 @@ const moduleSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    unavailableDates: [{
-        subjectName: String, 
-        subjectType: String, 
-        subjectAge: Number, 
-        teacherName: String, 
-        date: Date
-    }]
+    unavailableDates: {
+        type: [String]
+    }
 });
 
 export default mongoose.model('Module', moduleSchema)  
