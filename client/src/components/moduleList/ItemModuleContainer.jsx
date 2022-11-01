@@ -84,14 +84,37 @@ const ItemModuleContainer = ({ labId }) => {
     const alldates = getDatesInRange(dates.startDate, dates.endDate);
     const datesView = getDatesView(dates.startDate, dates.endDate);
 
-    const isAvalible = (dateNumber) => {
+    // const isAvalible = (dateNumber) => {
 
-        const isFound = dateNumber.unavailableDates.some((date) =>
-            alldates.includes(new Date(date.date).getTime())
-        );
+    //     console.log(dateNumber)
 
-        return !isFound;
+    //     const isFound = dateNumber.unavailableDates.some((date) =>
+    //         alldates.includes(new Date(date.date).getTime())
+    //     );
+
+    //     return !isFound;
+    // };
+    const isAvalible = async(dateNumber) => {
+
+        const bookingList = []
+
+        try {
+            const res = await axios.get(`/booking/${dateNumber._id}`)
+            bookingList.push(...res.data)
+            
+            const isFound = await res.data.some((date) =>
+                alldates.includes(new Date(date.date).getTime())
+            );
+    
+            console.log(dateNumber.name, isFound)
+    
+            return isFound;
+            
+        } catch (error) {
+            console.log(error)
+        }   
     };
+
 
     const handleSelect = (e) => {
         const checked = e.target.checked;
@@ -124,8 +147,9 @@ const ItemModuleContainer = ({ labId }) => {
                 await Promise.all(
                     selectedModules.map((module) => {
                         alldates.map((selectedDate) => {
-                            const res = axios.put(`/module/availability/${module}`, {
+                            const res = axios.post(`/booking/${module}`, {
                                 teacherName: user.fullname,
+                                teacherId: user._id,
                                 date: selectedDate,
                                 subjectName: subjectSelect.name,
                                 subjectType: subjectSelect.type,

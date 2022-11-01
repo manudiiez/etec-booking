@@ -9,40 +9,68 @@ export const createBooking = async (req, res, next) => {
     const moduleId = req.params.moduleid
 
     try {
-        const savedBooking = await newBooking.save()
-        try {
-            const moduleSaved = await Module.findByIdAndUpdate(moduleId,
-                { $push: { unavailableDates: savedBooking._id } },
-                { new: true }
-            )
+        const module = await Module.findById(moduleId)
 
+        const list = await Promise.all(module.unavailableDates.map(date => {
+            return Booking.findById(date)
+        }))
+
+        
+
+        const date = new Date(newBooking.date).getTime()
+        const item = list.filter(book => new Date(book.date).getTime() === date)
+
+        if(item.length === 0){
+            try {
+                const savedBooking = await newBooking.save()
+                
+                try {
+                    const moduleSaved = await Module.findByIdAndUpdate(moduleId,
+                        { $push: { unavailableDates: savedBooking._id } },
+                        { new: true }
+                    )
+        
+                    res.status(200).json({
+                        module: moduleSaved,
+                        booking: savedBooking
+                    })
+                } catch (error) {
+                    next(error)
+                }
+            } catch (error) {
+                next(error)
+            }
+        }else{
             res.status(200).json({
-                module: moduleSaved,
-                booking: savedBooking
-            })
-        } catch (error) {
-            next(error)
+                message: 'ya existe el boking'
+            }) 
         }
+
     } catch (error) {
         next(error)
     }
 }
 
-const updateBookingAprove = async (subject, booking) => {
-    await Booking.findByIdAndUpdate(
-        booking._id,
-        { $set: {
-            subjectName: subject.name,
-            subjectType: subject.type,
-            subjectAge: subject.age,
-            teacherName: subject.teacher
-        } },
-        { new: true }
-    )
 
-    res.status(200).json({
-        message: 'Su reserva fue realizada con exito'
-    })
+const updateBookingAprove = async (subject, booking, userId) => {
+    try {
+        await Booking.findByIdAndUpdate(
+            booking._id,
+            { $set: {
+                subjectName: subject.name,
+                subjectType: subject.type,
+                subjectAge: subject.age,
+                teacherName: subject.teacher,
+                teacherId: userId,
+            } },
+            { new: true }
+        )
+    
+        return 'Su reserva fue realizada con exito'
+
+    } catch (error) {
+        console.log(error)
+    }
 
 }
 
@@ -51,6 +79,7 @@ export const updateBooking = async (req, res, next) => {
     const subjectId = req.params.subjectid
     const bookingId = req.params.id
     const labId = req.params.labid
+    const userId = req.params.userid
 
     try {
 
@@ -66,32 +95,35 @@ export const updateBooking = async (req, res, next) => {
             const byNum2 = 6 - subject.age;
             if (byNum1 <= byNum2) {
                 res.status(200).json({
-                    message: "La reserva fue rechaza debido a que esta materia tiene prioridad en este laboratorio"
+                    message: "La reserva fue rechaza por el año",
+                    booking: booking,
+                    subject: subject,
+                    lab: lab
                 })
             } else if (byNum1 > byNum2) {
-                updateBookingAprove(subject, booking)
+                res.status(200).json({
+                    message: updateBookingAprove(subject, booking),
+                    booking: booking,
+                    subject: subject,
+                    lab: lab
+                })
             }
         } else if (byType1 && !byType2) {
-            console.log('se queda la reserva');
+            res.status(200).json({
+                message: "La reserva fue rechaza por su categoria",
+                booking: booking,
+                subject: subject,
+                lab: lab
+            })
         } else if (!byType1 && byType2) {
-            console.log('cambia la reserva');
+            res.status(200).json({
+                message: updateBookingAprove(subject, booking),
+                booking: booking,
+                subject: subject,
+                lab: lab
+            })
         }
 
-        res.status(200).json({
-            subject: subject,
-            booking: booking
-        })
-
-
-
-
-        // const updatedBooking = await Booking.findByIdAndUpdate(
-        //     req.params.id,
-        //     { $set: req.body },
-        //     { new: true }
-        // )
-
-        // res.status(200).json(updatedBooking)
     } catch (error) {
         next(error)
     }
@@ -99,16 +131,56 @@ export const updateBooking = async (req, res, next) => {
 
 export const deleteBooking = async (req, res, next) => {
     const moduleId = req.params.moduleid
+    const userId = req.params.userid
     try {
-        await Booking.findByIdAndDelete(req.params.id)
-        try {
-            await Module.findByIdAndUpdate(moduleId, {
-                $pull: { unavailableDates: req.params.id }
+        
+        const booking = await Booking.findById(req.params.id)
+        if(booking.teacherId === userId){
+
+
+            await Booking.findByIdAndDelete(req.params.id)
+
+            try {
+                await Module.findByIdAndUpdate(moduleId, {
+                    $pull: { unavailableDates: req.params.id }
+                })
+
+                res.status(200).json({
+                    message: 'reserva eliminada'
+                })
+            } catch (error) {
+                next(error)
+            }
+
+        }else{
+            res.status(200).json({
+                message: 'reserva no eliminada'
             })
-        } catch (error) {
-            next(error)
         }
-        res.status(200).json('Booking has been deleted')
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const getBooking = async (req, res, next) => {
+    try {
+        const book = await Booking.findById(req.params.id)
+        res.status(200).json(book)
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+export const getModuleBookings = async (req, res, next) => {
+    const moduleId = req.params.moduleid
+    try {
+        const module = await Module.findById(moduleId)
+        const listBooking = await Promise.all(module.unavailableDates.map(booking => {
+            return Booking.findById(booking)
+        }))
+
+        res.status(200).json(listBooking)
     } catch (error) {
         next(error)
     }

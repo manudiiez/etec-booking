@@ -36,7 +36,7 @@ const ItemModule = ({ data, loading, dates, setDates, isAvalible, handleSelect, 
                                         data.map(item => (
                                             <li key={item._id}>
                                                 <span>{item.name}</span>
-                                                <input type="checkbox" value={item._id} name={item.name} disabled={!isAvalible(item)} onChange={handleSelect} />
+                                                <input type="checkbox" value={item._id} name={item.name}  onChange={() => console.log(isAvalible(item))} />
                                             </li>
                                         ))
                                     }

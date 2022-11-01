@@ -6,7 +6,7 @@ import ItemLabCalendar from './ItemLabCalendar';
 
 const ItemLabCalendarContainer = ({labId}) => {
 
-    const { data, loading, error } = useFetch(`/lab/events/${labId}`);
+    const { data, loading, error } = useFetch(`/lab/events/${labId}`); 
 
     const getEvent = (date, endDate) => {
         let date2 = new Date(date)

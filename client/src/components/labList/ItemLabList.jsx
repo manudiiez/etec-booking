@@ -26,7 +26,7 @@ const ItemLabList = ({ data, loading, reFetch }) => {
                                     data.map(item => (
                                         <div className="card" key={item._id} onClick={() => {navigate(`/lab/${item._id}`)}} >
                                             <div className="img">
-                                                <img src="https://tecnosolucionescr.net/templates/yootheme/cache/27_Lab_acreditado-e651d64b.png" alt="" />
+                                                <img src={item.img} alt="" />
                                             </div>
                                             <div className="text">
                                                 <h4>{item.name}</h4>

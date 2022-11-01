@@ -18,7 +18,7 @@ const ItemLabHeader = ({data}) => {
                 <button>Reservar</button>
             </div>
             <div className="img">
-                <img src={img} alt="" />
+                <img src={data.img} alt="" />
             </div>
         </div>
     </Container>

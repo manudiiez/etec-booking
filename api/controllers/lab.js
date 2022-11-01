@@ -1,5 +1,7 @@
 import Lab from '../models/Lab.js'
 import Module from '../models/Module.js'
+import Booking from '../models/Booking.js'
+
 
 
 // CREATE 
@@ -92,35 +94,67 @@ export const getLabEvents = async (req, res, next) => {
     const labId = req.params.labid
     try {
         const lab = await Lab.findById(labId)
-        const list = await Promise.all(lab.modules.map(module => {
+        const listModule = await Promise.all(lab.modules.map(module => {
             return Module.findById(module)
         }))
 
-        const list2 = []
+        // const listBooking = listModule.map(async(module) => {
+            // const list = await Promise.all(module.unavailableDates.map(date => {
+            //     return Booking.findById(date)
+            // }))
 
-        list.map(module => {
-            module.unavailableDates.map( item => {
-                let endDate = new Date(item.date)
-                let date = {
-                    subjectName: item.subjectName,
-                    subjectType: item.subjectType,
-                    subjectAge: item.subjectAge,
-                    teacherName: item.teacherName,
-                    date: item.date,
-                    endDate: endDate,
-                    _id: item._id
-                }
-                date.endDate.setHours(module.endHour , module.endTime)
-                date.date.setHours(module.startHour , module.startTime)
-                list2.push(date)
-            } )
-        })
-
-        // list.map(module => {
-        //     list2.push(...module.unavailableDates)
+        //     return list
         // })
-        res.status(200).json(list2)
+
+        const listLabEvents = []
+
+        const listBooking = await Promise.all(listModule.map(async(module) => {
+
+            const list = await Promise.all(module.unavailableDates.map(date => {
+                return Booking.findById(date)
+            }))
+            listLabEvents.push(...list)
+            return list
+        }))
+
+        res.status(200).json(listLabEvents)
     } catch (error) {
         next(error)
     }
 }
+// export const getLabEvents = async (req, res, next) => {
+//     const labId = req.params.labid
+//     try {
+//         const lab = await Lab.findById(labId)
+//         const list = await Promise.all(lab.modules.map(module => {
+//             return Module.findById(module)
+//         }))
+
+//         const list2 = []
+
+//         list.map(module => {
+//             module.unavailableDates.map( item => {
+//                 let endDate = new Date(item.date)
+//                 let date = {
+//                     subjectName: item.subjectName,
+//                     subjectType: item.subjectType,
+//                     subjectAge: item.subjectAge,
+//                     teacherName: item.teacherName,
+//                     date: item.date,
+//                     endDate: endDate,
+//                     _id: item._id
+//                 }
+//                 date.endDate.setHours(module.endHour , module.endTime)
+//                 date.date.setHours(module.startHour , module.startTime)
+//                 list2.push(date)
+//             } )
+//         })
+
+//         // list.map(module => {
+//         //     list2.push(...module.unavailableDates)
+//         // })
+//         res.status(200).json(list2)
+//     } catch (error) {
+//         next(error)
+//     }
+// }
