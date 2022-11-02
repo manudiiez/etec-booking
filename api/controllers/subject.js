@@ -57,8 +57,8 @@ export const deleteSubject = async (req, res, next) => {
 // GET
 export const getSubject = async (req, res, next) => {
     try {
-        const Subject = await Subject.findById(req.params.id)
-        res.status(200).json(Subject)
+        const subject = await Subject.findById(req.params.id)
+        res.status(200).json(subject)
     } catch (error) {
         next(error)
     }

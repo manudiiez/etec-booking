@@ -13,7 +13,7 @@ router.put('/:id/:userid', verifyUser, updateSubject)
 // DELETE
 router.delete('/:id/:userid', verifyUser, deleteSubject)
 // GET
-router.get('/:id', verifyUser, getSubject)
+router.get('/:id', getSubject)
 // GET ALL
 router.get('/', getAllSubjects)
 router.get('/teacher/:userid', getAllSubjectsTeacher)

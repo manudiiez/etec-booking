@@ -17,4 +17,4 @@ router.post('/availability/:moduleid', getModuleBookingsAvailability)
 
 
 
-export default router
+export default router  

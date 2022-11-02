@@ -84,33 +84,6 @@ const ItemModuleContainer = ({ labId }) => {
     const alldates = getDatesInRange(dates.startDate, dates.endDate);
     const datesView = getDatesView(dates.startDate, dates.endDate);
 
-    // const isAvalible = (dateNumber) => {
-
-    //     console.log(dateNumber)
-
-    //     const isFound = dateNumber.unavailableDates.some((date) =>
-    //         alldates.includes(new Date(date.date).getTime())
-    //     );
-
-    //     return !isFound;
-    // };
-    // const isAvalible2 = async(dateNumber) => {
-
-    //     try {
-    //         const res = await axios.get(`/booking/${dateNumber._id}`)
-            
-    //         const isFound = await res.data.some((date) =>
-    //             alldates.includes(new Date(date.date).getTime())
-    //         );
-    
-    //         console.log(dateNumber.name, isFound)
-    
-    //         return isFound;
-            
-    //     } catch (error) {
-    //         console.log(error)
-    //     }   
-    // };
     const isAvalible = async(dateNumber) => {
         console.log(alldates)
         try {
@@ -122,27 +95,6 @@ const ItemModuleContainer = ({ labId }) => {
             console.log(error)
         }   
     };
-    // const isAvalible = (dateNumber) => {
-
-    //     axios.get(`/booking/${dateNumber._id}`).
-    //     then((result) => {
-    //         const isFound = result.data.some((date) =>
-    //             alldates.includes(new Date(date.date).getTime())
-    //         )
-    //         console.log(isFound)
-    //         return isFound
-    //     });
-    
-    // };
-
-    // const isAvalible = (dateNumber) => {
-    //     isAvalible2(dateNumber)
-    //     .then(function(result){
-    //         console.log('result', result)
-    //         return result
-    //     })
-
-    // }
 
 
     const handleSelect = (e) => {

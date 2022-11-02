@@ -98,14 +98,6 @@ export const getLabEvents = async (req, res, next) => {
             return Module.findById(module)
         }))
 
-        // const listBooking = listModule.map(async(module) => {
-            // const list = await Promise.all(module.unavailableDates.map(date => {
-            //     return Booking.findById(date)
-            // }))
-
-        //     return list
-        // })
-
         const listLabEvents = []
 
         await Promise.all(listModule.map(async(module) => {

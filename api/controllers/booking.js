@@ -128,7 +128,7 @@ export const updateBooking = async (req, res, next) => {
         next(error)
     }
 }
-
+ 
 export const deleteBooking = async (req, res, next) => {
     const moduleId = req.params.moduleid
     const userId = req.params.userid
@@ -183,7 +183,7 @@ export const getModuleBookings = async (req, res, next) => {
         res.status(200).json(listBooking)
     } catch (error) {
         next(error)
-    }
+    } 
 }
 export const getModuleBookingsAvailability = async (req, res, next) => {
     const moduleId = req.params.moduleid

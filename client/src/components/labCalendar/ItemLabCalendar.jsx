@@ -8,20 +8,40 @@ import styled from 'styled-components'
 import { Text } from '../../theme/theme';
 /* ------------------------------- COMPONENTS ------------------------------- */
 import Loader from '../Loader'
+import ItemModal from '../modal/ItemModal'
+import ItemModuleSelect from '../moduleList/ItemModuleSelect';
+import ItemLabSelect from './ItemLabSelect';
 
 
-const ItemLabCalendar = ({ data, loading, error, getEvent }) => {
+const ItemLabCalendar = ({ data, loading, error, getEvent, editBooking, modal, changeModal, setBookingItem, bookingItem, handleChangeSelect, userId }) => {
+
+    const selectBooking = (item) => {
+        setBookingItem(item)
+        console.log(item)
+        changeModal()
+    }
     return (
         <Container>
+
+            <ItemModal modal={modal} change={changeModal}>
+                <ModalBody>
+                    <p className="title">
+                        Editar <span>Reserva</span>
+                    </p>
+                    <div>
+                        <p>{bookingItem && bookingItem.subjectName}</p>
+                        <p>{bookingItem && bookingItem.teacherName}</p>
+                        <p>{bookingItem && bookingItem.subjectType}</p>
+                        <p>{bookingItem && bookingItem.subjectAge}</p>
+                    </div>
+                    {
+                        bookingItem && <ItemLabSelect handleChangeSelect={handleChangeSelect} id={userId} />
+                    }
+                    <button onClick={editBooking}>Editar reserva</button>
+                </ModalBody>
+            </ItemModal>
+
             <div className="container-lg">
-                {/* <div className="calendar">
-                    <ResponsiveCalendar
-                        withWeekDays
-                        breakPoint={768}
-                        date={new Date()}
-                    
-                    />
-                </div> */}
                 <p>Eventos</p>
                 <Timeline>
                     {
@@ -36,7 +56,7 @@ const ItemLabCalendar = ({ data, loading, error, getEvent }) => {
                                             <p>{item.subjectAge}</p>
                                         </div>
                                         <div>
-                                            <button>Reservar</button>
+                                            <button onClick={() => { selectBooking(item) }}>Reservar</button>
                                             <button>Eliminar</button>
                                         </div>
                                     </EventContainer>
@@ -99,4 +119,49 @@ const EventContainer = styled.div`
         }
     }
 
+`
+
+const ModalBody = styled.div`
+    width: 100%;
+    .title{
+        ${Text({ size: '1.5rem', color: props => props.theme.black, weight: '600' })}
+        text-align: center;
+        span{
+            color: ${props => props.theme.orange};
+        }
+        margin-bottom: 3rem;
+    }
+    div{
+        p{
+            &:nth-of-type(1){
+                ${Text({ size: '1.5rem', color: props => props.theme.orange, weight: '600' })}
+            }
+            &:nth-of-type(2){
+                ${Text({ size: '1.3rem', color: props => props.theme.black, weight: '400' })}
+            }
+            &:nth-of-type(3){
+                ${Text({ size: '1rem', color: props => props.theme.white_2, weight: '700' })}
+                background-color: ${props => props.theme.orange};
+                padding: 1rem;
+                border-radius: 10px;
+            }
+            &:nth-of-type(4){
+                ${Text({ size: '1rem', color: props => props.theme.white_2, weight: '700' })}
+                background-color: ${props => props.theme.orange};
+                padding: 1rem;
+                border-radius: 10px;
+            }
+        }
+    }
+    button{
+        width: 100%;
+        padding: 1rem 0;
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        border-radius: 10px;
+        background-color: ${props => props.theme.orange};
+        ${Text({ size: '1rem', color: props => props.theme.white_2, weight: '600' })}
+        margin-top: 2rem;
+        cursor: pointer;
+    }
 `
