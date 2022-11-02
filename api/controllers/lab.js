@@ -105,11 +105,63 @@ export const getLabEvents = async (req, res, next) => {
             const list = await Promise.all(module.unavailableDates.map(date => {
                 return Booking.findById(date)
             }))
-            listLabEvents.push(...list)
+
+            list.map(date => {
+                let endDate = new Date(date.date)
+                let newDate = {
+                    subjectName: date.subjectName,
+                    subjectType: date.subjectType,
+                    subjectAge: date.subjectAge,
+                    teacherName: date.teacherName,
+                    date: date.date,
+                    endDate: endDate,
+                    _id: date._id
+                }
+                newDate.endDate.setHours(module.endHour , module.endTime)
+                newDate.date.setHours(module.startHour , module.startTime)
+                listLabEvents.push(newDate)
+            })
             return list
         }))
 
         res.status(200).json(listLabEvents)
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const getLabEvents2 = async (req, res, next) => {
+    const labId = req.params.labid
+    try {
+        const lab = await Lab.findById(labId)
+        const list = await Promise.all(lab.modules.map(module => {
+            return Module.findById(module)
+        }))
+
+        const list2 = []
+
+        list.map(module => {
+            module.unavailableDates.map( item => {
+                let endDate = new Date(item.date)
+                let date = {
+                    subjectName: item.subjectName,
+                    subjectType: item.subjectType,
+                    subjectAge: item.subjectAge,
+                    teacherName: item.teacherName,
+                    date: item.date,
+                    endDate: endDate,
+                    _id: item._id
+                }
+                date.endDate.setHours(module.endHour , module.endTime)
+                date.date.setHours(module.startHour , module.startTime)
+                list2.push(date)
+            } )
+        })
+
+        // list.map(module => {
+        //     list2.push(...module.unavailableDates)
+        // })
+        res.status(200).json(list2)
     } catch (error) {
         next(error)
     }
