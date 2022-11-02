@@ -143,7 +143,7 @@ const ItemModuleContainer = ({ labId }) => {
                         })
                     })
                 );
-                reFetch()
+                navigate('/')
             } catch (error) {
                 Swal.fire({
                     icon: 'error',

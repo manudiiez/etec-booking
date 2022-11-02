@@ -29,7 +29,6 @@ const ItemSignIn = ({ handleChange, handleClick, loading,error }) => {
             }
             
             <button type='submit' disabled={loading} onClick={handleClick}><span>Iniciar sesion</span></button>
-            <p>Todavia no tiene un usuario? <Link to='signup'>Registrarse</Link></p>
           </form>
         </div>
       </div>

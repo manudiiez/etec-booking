@@ -40,7 +40,7 @@ const ItemUserHeader = ({ user, changeModal, modal, handleChange, credentials, s
             <div className="container-lg">
                 <div className="user-img">
                     <div className="img">
-                        <img src="https://tecnosolucionescr.net/templates/yootheme/cache/27_Lab_acreditado-e651d64b.png" alt="" />
+                        <img src={user.img} alt="" />
                         <h5>{user.username}</h5>
                     </div>
                 </div>
