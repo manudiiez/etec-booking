@@ -4,13 +4,13 @@ import Datatable from "../../components/datatable/Datatable"
 /* ---------------------------- STYLED-COMPONENTS --------------------------- */
 import styled from "styled-components"
 
-const List = ({columns}) => {
+const List = ({columns, title}) => {
   return (
     <Container className="list">
       <Sidebar/>
       <div className="listContainer">
         <Navbar/>
-        <Datatable columns={columns}/>
+        <Datatable columns={columns} title={title}/>
       </div>
     </Container>
   )

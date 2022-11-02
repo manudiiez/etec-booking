@@ -15,9 +15,11 @@ import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
 /* ---------------------------- styled-components --------------------------- */
 import styled from 'styled-components'
+import { AuthContext } from "../../context/AuthContext";
 
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
+
   return (
     <Container className="sidebar">
       <div className="top">
@@ -48,15 +50,13 @@ const Sidebar = () => {
               <span>Laboratorios</span>
             </li>
           </Link>
-          <li>
-            <CreditCardIcon className="icon" />
-            <span>Materias</span>
-          </li>
           <p className="title">USER</p>
-          <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
-          </li>
+          <Link to='/profile' style={{ textDecoration: "none" }}>
+            <li>
+              <AccountCircleOutlinedIcon className="icon" />
+              <span>Profile</span>
+            </li>
+          </Link>
           <li>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>

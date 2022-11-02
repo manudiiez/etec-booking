@@ -4,28 +4,54 @@ import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import useFetch from '../../hooks/useFetch'
 import axios from "axios";
+import Swal from 'sweetalert2'
+
 
 /* ---------------------------- styled-components --------------------------- */
 import styled from 'styled-components'
 import Loader from "../Loader";
 
-const Datatable = ({columns}) => {
+const Datatable = ({ columns, title }) => {
   const location = useLocation()
   const path = location.pathname.split('/')[1];
 
-  const {data, loading, error, reFetch} = useFetch(`/${path}/`)
+  const { data, loading, error, reFetch } = useFetch(`/${path}/`)
 
-
-  const handleDelete = async(id) => {
+  const handleDelete = async (id) => {
     console.log(id)
-    const lab = await axios.delete(`/${path}/${id}`)
-    console.log(lab)
-    reFetch()
+    Swal.fire({
+      title: 'Estas seguro??',
+      text: "No hay vuelta atras",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, borrar!'
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`/${path}/${id}`)
+          Swal.fire(
+            'Eliminado!',
+            'Tu reserva fue eliminada.',
+            'success'
+          )
+          reFetch()
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.response.data.message,
+            confirmButtonText: 'Continuar'
+          })
+        }
+      }
+    })
   };
 
   const writeTable = () => {
-    const list = data.map( item => { 
-      return { id: item._id , ...item }; 
+    const list = data.map(item => {
+      return { id: item._id, ...item };
     });
     console.log(list)
     return (
@@ -48,14 +74,14 @@ const Datatable = ({columns}) => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
+            <Link to={`/${path}/${params.row.id}`} style={{ textDecoration: "none" }}>
+              <div className="viewButton">Editar</div>
             </Link>
             <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
             >
-              Delete
+              Eliminar
             </div>
           </div>
         );
@@ -65,18 +91,19 @@ const Datatable = ({columns}) => {
   return (
     <Container className="datatable">
       <div className="datatableTitle">
-        Add New User
+        {title}
         <Link to={`/${path}/new`} className="link">
-          Add New
+          Crear
         </Link>
       </div>
       {
         loading ? (
-          <Loader/>
-        ):(
+          <Loader />
+        ) : (
           writeTable()
         )
       }
+      
     </Container>
   );
 };

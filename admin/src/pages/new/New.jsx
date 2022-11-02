@@ -5,10 +5,13 @@ import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUpload
 import { useState } from "react";
 import styled from "styled-components";
 import Select from 'react-select'
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { modules } from "../../moduleData.js";
+import Swal from 'sweetalert2'
+
+
 
 const optionsLab = [
   { value: 'informatica', label: 'Informatica' },
@@ -27,15 +30,16 @@ const New = ({ inputs, title }) => {
   const location = useLocation()
   const path = location.pathname.split('/')[1];
   const [info, setInfo] = useState({});
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleChangeSelect = (e) => {
-    if( path === 'users'){
+    if (path === 'users') {
       setInfo((prev) => ({ ...prev, ['isAdmin']: e.value }));
-    }else{
+    } else {
       setInfo((prev) => ({ ...prev, ['type']: e.value }));
     }
   };
@@ -52,36 +56,41 @@ const New = ({ inputs, title }) => {
         data
       );
 
-      const {url} = uploadRes.data
+      const { url } = uploadRes.data
 
-      if(path === 'users'){
-        
+      if (path === 'users') {
+
         const newItem = {
           ...info,
           img: url
         }
         await axios.post('/auth/register', newItem)
-      }else{
-        
+      } else {
+
         const newItem = {
           ...info,
           img: url
         }
         const lab = await axios.post('/lab', newItem)
-        
-        const list = await Promise.all(modules.map(async(module) => {
-          return await axios.post('/module/'+lab.data._id, module)
+
+        await Promise.all(modules.map(async (module) => {
+          return await axios.post('/module/' + lab.data._id, module)
         }))
-        console.log(list)
       }
+
+      navigate('/')
+
     } catch (error) {
-      console.log(error);
+      console.log(error)
+      Swal.fire({
+        title: 'Error!',
+        text: error.response.data.message,
+        icon: 'error',
+        confirmButtonText: 'Continuar'
+      })
     }
   };
 
-  useEffect(() => {
-    console.log(info)
-  },[info])
 
   return (
     <Container className="new">
@@ -104,7 +113,7 @@ const New = ({ inputs, title }) => {
           </div>
           <div className="right">
             <form>
-              
+
 
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
@@ -112,18 +121,18 @@ const New = ({ inputs, title }) => {
                   <input type={input.type} onChange={handleChange} name={input.name} placeholder={input.placeholder} />
                 </div>
               ))}
-             { path === 'users' ? (
+              {path === 'users' ? (
 
                 <div className="formInput">
                   <label>Administrador</label>
                   <Select onChange={handleChangeSelect} name='isAdmin' options={optionsUser} />
                 </div>
-             ):(
+              ) : (
                 <div className="formInput">
                   <label>Categoria</label>
                   <Select onChange={handleChangeSelect} options={optionsLab} name='type' />
                 </div>
-             )
+              )
               }
               <div className="formInput">
                 <label htmlFor="file">

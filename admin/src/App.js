@@ -1,7 +1,7 @@
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import List from "./pages/list/List";
-import Single from "./pages/single/Single";
+import SingleUser from "./pages/single/SingleUser";
 import New from "./pages/new/New";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { labInputs, userInputs } from "./formSource";
@@ -10,6 +10,8 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/AuthContext";
 import {labColumns , userColumns } from "./datatablesource";
+import Profile from "./pages/profile/Profile";
+import SingleLab from "./pages/single/SingleLab";
 
 
 function App() {
@@ -35,19 +37,24 @@ function App() {
                   <Home />
                 </ProtectedRoute>
             } />
+            <Route path="profile" element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+            } />
             <Route path="login" element={<Login />} />
             <Route path="users">
               <Route index element={
                 <ProtectedRoute>
-                  <List columns={userColumns}/>
+                  <List columns={userColumns} title='Usuarios'/>
                 </ProtectedRoute>
               } />
-              <Route path=":userId" element={<Single />} />
+              <Route path=":userId" element={<SingleUser />} />
               <Route
                 path="new"
                 element={
                   <ProtectedRoute>
-                    <New inputs={userInputs} title="Add New User" />
+                    <New inputs={userInputs} title="Añadir un nuevo usuario" />
                   </ProtectedRoute>
                 }
               />
@@ -55,15 +62,15 @@ function App() {
             <Route path="lab">
               <Route index element={
                 <ProtectedRoute>
-                  <List columns={labColumns}/>
+                  <List columns={labColumns} title='Laboratorios'/>
                 </ProtectedRoute>
               } />
-              <Route path=":labId" element={<Single />} />
+              <Route path=":labId" element={<SingleLab />} />
               <Route
                 path="new"
                 element={
                   <ProtectedRoute>
-                    <New inputs={labInputs} title="Add New Product" />
+                    <New inputs={labInputs} title="Añadir un nuevo producto" />
                   </ProtectedRoute>
                 }
               />
