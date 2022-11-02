@@ -13,12 +13,17 @@ import ItemModuleSelect from '../moduleList/ItemModuleSelect';
 import ItemLabSelect from './ItemLabSelect';
 
 
-const ItemLabCalendar = ({ data, loading, error, getEvent, editBooking, modal, changeModal, setBookingItem, bookingItem, handleChangeSelect, userId }) => {
+const ItemLabCalendar = ({ data, loading, error, getEvent, editBooking, modal, changeModal, setBookingItem, bookingItem, handleChangeSelect, userId, deleteBooking }) => {
 
     const selectBooking = (item) => {
         setBookingItem(item)
         console.log(item)
         changeModal()
+    }
+
+    const chooseBooking = (item) => {
+        setBookingItem(item)
+        deleteBooking()
     }
     return (
         <Container>
@@ -57,7 +62,7 @@ const ItemLabCalendar = ({ data, loading, error, getEvent, editBooking, modal, c
                                         </div>
                                         <div>
                                             <button onClick={() => { selectBooking(item) }}>Reservar</button>
-                                            <button>Eliminar</button>
+                                            <button onClick={() => { chooseBooking(item) }}>Eliminar</button>
                                         </div>
                                     </EventContainer>
                                 </Event>

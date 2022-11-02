@@ -12,7 +12,8 @@ import { modules } from "../../moduleData.js";
 
 const optionsLab = [
   { value: 'informatica', label: 'Informatica' },
-  { value: 'electronica', label: 'Electronica' }
+  { value: 'electronica', label: 'Electronica' },
+  { value: 'otro', label: 'Otro' },
 ]
 const optionsUser = [
   { value: true, label: 'Es administrador' },

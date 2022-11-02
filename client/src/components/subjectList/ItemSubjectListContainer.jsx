@@ -19,7 +19,7 @@ const ItemSubjectListContainer = ({userId}) => {
 
     const navigate = useNavigate()
 
-    const { data, loading, error } = useFetch(`/subject/teacher/${userId}`);
+    const { data, loading, error, reFetch } = useFetch(`/subject/teacher/${userId}`);
 
     const changeModalState = () => {
         setModalState(!modalState)
@@ -38,8 +38,9 @@ const ItemSubjectListContainer = ({userId}) => {
             setErrorMsj('Debe completar los campos')
         }else{
             try {
-                const res = await axios.put(`/subject/${subject._id}/${userId}`, subject);
-                navigate("/");
+                await axios.put(`/subject/${subject._id}/${userId}`, subject);
+                setModalState(false)
+                reFetch()
             } catch (err) {
                 console.log(err)
             }

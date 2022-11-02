@@ -9,7 +9,7 @@ router.post('/:moduleid', createBooking)
 // UPDATE
 router.put('/:id/:subjectid/:labid/:userid', updateBooking)
 // DELETE
-router.delete('/:id/:moduleid/:userid', deleteBooking)
+router.delete('/:id/:userid', deleteBooking)
 // GET
 router.get('/:moduleid', getModuleBookings)
 router.post('/availability/:moduleid', getModuleBookingsAvailability)

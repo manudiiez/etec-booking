@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios';
 /* ---------------------------- REACT-ROUTER-DOM ---------------------------- */
 import { useNavigate } from 'react-router-dom';
+/* ------------------------------- SWEETALERT ------------------------------- */
+import Swal from 'sweetalert2'
 /* ------------------------------- COMPONENTS ------------------------------- */
 import ItemModule from './ItemModule'
 /* ---------------------------------- HOOKS --------------------------------- */
@@ -45,7 +47,7 @@ const ItemModuleContainer = ({ labId }) => {
 
     const { user } = useContext(AuthContext)
 
-    const { data, loading, error } = useFetch(`/lab/module/${labId}`);
+    const { data, loading, error, reFetch } = useFetch(`/lab/module/${labId}`);
 
     const getDatesInRange = (startDate, endDate) => {
         const start = new Date(startDate);
@@ -122,6 +124,7 @@ const ItemModuleContainer = ({ labId }) => {
     };
 
     const handleClick = async () => {
+        setModalState(false)
         console.log('reservar')
         if(subjectSelect.name.length !== 0 || subjectSelect.type.length !== 0 || subjectSelect.age.length !== 0){
             try {
@@ -140,8 +143,15 @@ const ItemModuleContainer = ({ labId }) => {
                         })
                     })
                 );
-                navigate("/");
-            } catch (err) { }
+                reFetch()
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.response.data.message,
+                    confirmButtonText: 'Continuar'
+                })
+            }
         }else{
             console.log('vacio')
         }

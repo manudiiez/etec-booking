@@ -24,6 +24,10 @@ const bookingSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: true
+    },
+    moduleId: {
+        type: String,
+        required: true
     }
 });
 

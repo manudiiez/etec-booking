@@ -2,11 +2,12 @@ import Booking from '../models/Booking.js'
 import Module from '../models/Module.js'
 import Subject from '../models/Subject.js'
 import Lab from '../models/Lab.js'
+import { createError } from '../utils/error.js'
 
 // CREATE 
 export const createBooking = async (req, res, next) => {
-    const newBooking = new Booking(req.body)
     const moduleId = req.params.moduleid
+    const newBooking = new Booking({...req.body, moduleId: moduleId})
 
     try {
         const module = await Module.findById(moduleId)
@@ -22,6 +23,8 @@ export const createBooking = async (req, res, next) => {
 
         if(item.length === 0){
             try {
+
+
                 const savedBooking = await newBooking.save()
                 
                 try {
@@ -35,15 +38,14 @@ export const createBooking = async (req, res, next) => {
                         booking: savedBooking
                     })
                 } catch (error) {
-                    next(error)
+                    return next(createError(404, "Esta reserva ya fue realizada"))
+
                 }
             } catch (error) {
-                next(error)
+                return next(createError(404, "Esta reserva ya fue realizada"))
             }
         }else{
-            res.status(200).json({
-                message: 'ya existe el boking'
-            }) 
+            return next(createError(404, "Esta reserva ya fue realizada"))
         }
 
     } catch (error) {
@@ -69,7 +71,7 @@ const updateBookingAprove = async (subject, booking, userId) => {
         return 'Su reserva fue realizada con exito'
 
     } catch (error) {
-        console.log(error)
+        return next(createError(404, "A ocurrido un error, intente otra vez"))
     }
 
 }
@@ -94,33 +96,17 @@ export const updateBooking = async (req, res, next) => {
             const byNum1 = 6 - booking.subjectAge;
             const byNum2 = 6 - subject.age;
             if (byNum1 <= byNum2) {
-                res.status(200).json({
-                    message: "La reserva fue rechaza por el año",
-                    booking: booking,
-                    subject: subject,
-                    lab: lab
-                })
+                return next(createError(404, "La reserva fue rechazada porque la reserva actual tiene mas prioridad"))
             } else if (byNum1 > byNum2) {
                 res.status(200).json({
-                    message: updateBookingAprove(subject, booking),
-                    booking: booking,
-                    subject: subject,
-                    lab: lab
+                    message: updateBookingAprove(subject, booking)
                 })
             }
         } else if (byType1 && !byType2) {
-            res.status(200).json({
-                message: "La reserva fue rechaza por su categoria",
-                booking: booking,
-                subject: subject,
-                lab: lab
-            })
+            return next(createError(404, "La reserva fue rechazada porque la reserva actual tiene mas prioridad"))
         } else if (!byType1 && byType2) {
             res.status(200).json({
-                message: updateBookingAprove(subject, booking),
-                booking: booking,
-                subject: subject,
-                lab: lab
+                message: updateBookingAprove(subject, booking)
             })
         }
 
@@ -130,7 +116,6 @@ export const updateBooking = async (req, res, next) => {
 }
  
 export const deleteBooking = async (req, res, next) => {
-    const moduleId = req.params.moduleid
     const userId = req.params.userid
     try {
         
@@ -141,7 +126,7 @@ export const deleteBooking = async (req, res, next) => {
             await Booking.findByIdAndDelete(req.params.id)
 
             try {
-                await Module.findByIdAndUpdate(moduleId, {
+                await Module.findByIdAndUpdate(booking.moduleId, {
                     $pull: { unavailableDates: req.params.id }
                 })
 
@@ -153,9 +138,8 @@ export const deleteBooking = async (req, res, next) => {
             }
 
         }else{
-            res.status(200).json({
-                message: 'reserva no eliminada'
-            })
+            return next(createError(404, "La reserva porque usted no tiene permisos"))
+
         }
     } catch (error) {
         next(error)

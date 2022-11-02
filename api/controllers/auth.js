@@ -13,7 +13,10 @@ export const register = async(req, res, next) => {
         const email = await User.findOne({email: req.body.email})
         
         if(username || email) {
-            return next(createError(404, "This user already exists test with another user or email"))
+            return next(createError(404, "Este usuario ya existe pruebe con otro email o nombre de usuario"))
+        }
+        if(req.body.password.length < 6) {
+            return next(createError(404, "La contraseña es muy corta"))
         }
         
         const salt = bcrypt.genSaltSync(10)
@@ -36,11 +39,11 @@ export const login = async(req, res, next) => {
 
     try {
         const user = await User.findOne({username: req.body.username})
-        if(!user) return next(createError(404, 'User not found'))
+        if(!user) return next(createError(404, 'Ese usuario no fue encontrado'))
 
         const isPasswordCorrect = await bcrypt.compareSync(req.body.password, user.password);
 
-        if(!isPasswordCorrect) return next(createError(404, "Wrong password or username"))
+        if(!isPasswordCorrect) return next(createError(404, "Nombre de usuario o contraseña incorrectos"))
 
         const token = jwt.sign({id: user._id, isAdmin: user.isAdmin}, process.env.JWT)
 
