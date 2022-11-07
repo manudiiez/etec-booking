@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,6 +9,13 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import useFetch from './hooks/useFetch'
+import axios from 'axios';
+
+
+
+
+const URI = 'http://localhost:8800/api'
 
 
 ChartJS.register(
@@ -63,7 +70,28 @@ export const data = {
 };
 
 export function App() {
-  return <Bar options={options} data={data} />;
+
+  const [data2, setData2] = useState([])
+
+  useEffect(() => {
+    const get  = async() => {
+      const res = await axios.get(URI+'/lab')
+      console.log(res.data)
+      await res.data.map(item => {
+        setData2([...data2, item.name])
+      })
+    }
+    get()
+  },[])
+  return (
+    <div>
+      hola
+      {
+        data2.length !== 0 &&
+        <Bar options={options} data={data} />
+      }
+    </div>
+  )
 }
 
 export default App
