@@ -10,10 +10,6 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import useFetch from './hooks/useFetch'
-import axios from 'axios';
-
-
-
 
 const URI = 'http://localhost:8800/api'
 
@@ -40,10 +36,14 @@ export const options = {
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+const labels2 = monthNames
 const number = [10, 10, 12, 15, 2, 5, 30]
+const date = new Date().getMonth()
+const labels = [monthNames[date-3], monthNames[date-2], monthNames[date-1], monthNames[date]]
+console.log(labels2)
 
-export const data = {
+export const data2 = {
   labels,
   datasets: [
     {
@@ -71,24 +71,17 @@ export const data = {
 
 export function App() {
 
-  const [data2, setData2] = useState([])
+  const { data, loading, reFetch } = useFetch(`${URI}/chart/`);
 
   useEffect(() => {
-    const get  = async() => {
-      const res = await axios.get(URI+'/lab')
-      console.log(res.data)
-      await res.data.map(item => {
-        setData2([...data2, item.name])
-      })
-    }
-    get()
-  },[])
+    console.log(data)
+  }, [data])
+
   return (
     <div>
-      hola
       {
-        data2.length !== 0 &&
-        <Bar options={options} data={data} />
+        !loading &&
+        <Bar options={options} data={{labels: labels, datasets: data}} />
       }
     </div>
   )

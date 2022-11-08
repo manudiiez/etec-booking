@@ -10,6 +10,7 @@ import moduleRoute from './routes/modules.js'
 import subjectRoute from './routes/subjects.js'
 import usersRoute from './routes/users.js'
 import bookingRoute from './routes/booking.js'
+import chartRoute from './routes/chart.js'
 
 
 
@@ -19,8 +20,8 @@ dotenv.config()
 // CONEXION A MONGODB
 const connect = async ( ) => {
     try {
-        // await mongoose.connect(process.env.MONGO);
-        await mongoose.connect('mongodb://localhost:27017/booking-etec');
+        await mongoose.connect(process.env.MONGO);
+        // await mongoose.connect('mongodb://localhost:27017/booking-etec');
         console.log('Connected to mongoDB')
     } catch (error) {
         throw error;
@@ -48,6 +49,7 @@ app.use('/api/users', usersRoute);
 app.use('/api/lab', labRoute);
 app.use('/api/module', moduleRoute); 
 app.use('/api/booking', bookingRoute); 
+app.use('/api/chart', chartRoute); 
 
 
 
