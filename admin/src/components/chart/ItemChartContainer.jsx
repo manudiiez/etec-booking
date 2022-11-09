@@ -1,5 +1,5 @@
 import React from 'react'
-import useFetch from '../hooks/useFetch'
+import useFetch from '../../hooks/useFetch'
 import ItemChart from './ItemChart';
 import {
     Chart as ChartJS,
@@ -14,7 +14,7 @@ import {
 ChartJS.register(
     CategoryScale,
     LinearScale,
-    BarElement, 
+    BarElement,
     Title,
     Tooltip,
     Legend

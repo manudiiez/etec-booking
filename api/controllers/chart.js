@@ -1,6 +1,7 @@
 import Lab from '../models/Lab.js'
 import Module from '../models/Module.js'
 import Booking from '../models/Booking.js'
+import User from '../models/User.js'
 
 export const getLabsChart = async (req, res, next) => {
     try {
@@ -80,6 +81,60 @@ const randomRGB = () => {
     const y = Math.floor(Math.random() * 256);
     const z = Math.floor(Math.random() * 256);
     const RGBColor = "rgb(" + x + "," + y + "," + z + ")";  
-    console.log(RGBColor);
     return RGBColor
+}
+
+export const getBookingChart = async(req, res, next) => {
+    try {
+        const countType1 = await Booking.find({subjectType:'informatica'}).count()
+        const countType2 = await Booking.find({subjectType:'electronica'}).count()
+        const countType3 = await Booking.find({subjectType:'otros'}).count()
+        const arr = [
+            {
+                label: '# of Votes',
+                data: [countType1, countType2, countType3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                ],
+                borderWidth: 1,
+            }
+        ]
+        res.status(200).json(arr)
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+export const getLabCount = async(req, res, next) => {
+    try {
+        const labsCount = await Lab.count()
+        const bookingCount = await Booking.count()
+        const userCount = await User.count()
+        const exportObj = [
+            {
+                title: 'Usuarios',
+                count: await userCount
+            },
+            {
+                title: 'Salas',
+                count: await labsCount
+            },
+            {
+                title: 'Reservas',
+                count: await bookingCount
+            },
+        ]
+        res.status(200).json(exportObj)
+
+    } catch (error) {
+        next(error)
+    }
 }
