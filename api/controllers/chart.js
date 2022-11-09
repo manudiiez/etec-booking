@@ -9,8 +9,8 @@ export const getLabsChart = async (req, res, next) => {
             const list = await Promise.all(labs.map(async(lab) => {
                 const newItem = {
                     label: lab.name,
-                    data: await getLabsChart2(lab),
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)'
+                    data: await getStructuredData(lab),
+                    backgroundColor: randomRGB()
                 }
                 return newItem
             }))
@@ -24,7 +24,7 @@ export const getLabsChart = async (req, res, next) => {
         next(error)
     }
 }
-export const getLabsChart2 = async (lab) => {
+const getStructuredData = async (lab) => {
     try {
         const listModule = await Promise.all(lab.modules.map(module => {
             return Module.findById(module)
@@ -73,4 +73,13 @@ export const getLabsChart2 = async (lab) => {
     } catch (error) {
         console.log(error)
     }
+}
+
+const randomRGB = () => {
+    const x = Math.floor(Math.random() * 256);
+    const y = Math.floor(Math.random() * 256);
+    const z = Math.floor(Math.random() * 256);
+    const RGBColor = "rgb(" + x + "," + y + "," + z + ")";  
+    console.log(RGBColor);
+    return RGBColor
 }
