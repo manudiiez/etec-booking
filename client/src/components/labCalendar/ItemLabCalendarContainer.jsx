@@ -26,7 +26,6 @@ const ItemLabCalendarContainer = ({ labId }) => {
     });
 
 
-    const navigate = useNavigate()
 
     const { user } = useContext(AuthContext);
 
@@ -50,12 +49,8 @@ const ItemLabCalendarContainer = ({ labId }) => {
 
         setModalState(false)
 
-        console.log(`/booking/${bookingItem._id}/${subjectSelect.id}/${labId}/${user._id}`)
-
         try {
             const res = await axios.get(`/subject/${subjectSelect.id}`);
-
-            console.log(res)
 
             try {
                 await axios.put(`/booking/${bookingItem._id}/${subjectSelect.id}/${labId}/${user._id}`, {

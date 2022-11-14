@@ -83,6 +83,8 @@ const Container = styled.div`
         position: relative;
         img{
             border-radius: 50%;
+            width: 30px;
+            height: 30px;
             width: 100%;
             object-fit: cover;
         }

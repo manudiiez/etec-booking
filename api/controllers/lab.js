@@ -112,8 +112,10 @@ export const getLabEvents = async (req, res, next) => {
                     title: `${date.subjectName} de ${date.teacherName}`,
                     start: date.date,
                     end: endDate,
+                    subjectName: date.subjectName,
                     subjectType: date.subjectType,
                     subjectAge: date.subjectAge,
+                    teacherName: date.teacherName,
                     _id: date._id
                 }
                 newDate.end.setHours(module.endHour, module.endTime)

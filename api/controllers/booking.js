@@ -48,22 +48,22 @@ export const createBooking = async (req, res, next) => {
             return next(createError(404, "Esta reserva ya fue realizada"))
         }
 
-    } catch (error) {
+    } catch (error) { 
         next(error)
     }
 }
 
 
-const updateBookingAprove = async (subject, booking, userId) => {
+const updateBookingAprove = async (subject, booking) => {
     try {
         await Booking.findByIdAndUpdate(
             booking._id,
             { $set: {
-                subjectName: subject.name,
-                subjectType: subject.type,
-                subjectAge: subject.age,
-                teacherName: subject.teacher,
-                teacherId: userId,
+                subjectName: subject.subjectName,
+                subjectType: subject.subjectType,
+                subjectAge: subject.subjectAge,
+                teacherName: subject.teacherName,
+                teacherId: subject.teacherId,
             } },
             { new: true }
         )
@@ -82,6 +82,7 @@ export const updateBooking = async (req, res, next) => {
     const bookingId = req.params.id
     const labId = req.params.labid
     const userId = req.params.userid
+    const body = req.body
 
     try {
 
@@ -99,14 +100,14 @@ export const updateBooking = async (req, res, next) => {
                 return next(createError(404, "La reserva fue rechazada porque la reserva actual tiene mas prioridad"))
             } else if (byNum1 > byNum2) {
                 res.status(200).json({
-                    message: updateBookingAprove(subject, booking)
+                    message: updateBookingAprove(body, booking)
                 })
             }
         } else if (byType1 && !byType2) {
             return next(createError(404, "La reserva fue rechazada porque la reserva actual tiene mas prioridad"))
         } else if (!byType1 && byType2) {
             res.status(200).json({
-                message: updateBookingAprove(subject, booking)
+                message: updateBookingAprove(body, booking)
             })
         }
 

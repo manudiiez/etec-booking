@@ -22,15 +22,13 @@ import ItemLabSelect from './ItemLabSelect';
 const ItemLabCalendar = ({ data, loading, error, getEvent, editBooking, modal, changeModal, setBookingItem, bookingItem, handleChangeSelect, userId, deleteBooking }) => {
 
     const selectBooking = (item) => {
-        setBookingItem(item)
-        console.log(item)
+        setBookingItem({...item.event._def.extendedProps, date: item.event._instance.range.start})
+        console.log(bookingItem)
         changeModal()
     }
 
-    const chooseBooking = (item) => {
-        setBookingItem(item)
-        deleteBooking()
-    }
+    const date = new Date()
+
     return (
         <Container>
 
@@ -48,7 +46,8 @@ const ItemLabCalendar = ({ data, loading, error, getEvent, editBooking, modal, c
                     {
                         bookingItem && <ItemLabSelect handleChangeSelect={handleChangeSelect} id={userId} />
                     }
-                    <button onClick={editBooking}>Editar reserva</button>
+                    <button onClick={selectBooking} disabled={new Date(bookingItem?.date).getDate() === new Date().getDate()} >Editar reserva</button>
+                    <button onClick={deleteBooking}>Eliminar</button>
                 </ModalBody>
             </ItemModal>
 
@@ -74,7 +73,9 @@ const ItemLabCalendar = ({ data, loading, error, getEvent, editBooking, modal, c
                     selectable={true}
                     events={data}
 
-                    eventClick={changeModal}
+                    eventClick={(data) => {
+                        selectBooking(data)
+                    }}
                 />
                 {/* <Timeline>
                     {
@@ -196,5 +197,11 @@ const ModalBody = styled.div`
         ${Text({ size: '1rem', color: props => props.theme.white_2, weight: '600' })}
         margin-top: 2rem;
         cursor: pointer;
+
+        &:disabled{
+            background-color: ${props => props.theme.gray};
+            color: ${props => props.theme.black};
+            cursor: not-allowed;
+        }
     }
 `
