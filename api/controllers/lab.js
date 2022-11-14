@@ -109,16 +109,15 @@ export const getLabEvents = async (req, res, next) => {
             list.map(date => {
                 let endDate = new Date(date.date)
                 let newDate = {
-                    subjectName: date.subjectName,
+                    title: `${date.subjectName} de ${date.teacherName}`,
+                    start: date.date,
+                    end: endDate,
                     subjectType: date.subjectType,
                     subjectAge: date.subjectAge,
-                    teacherName: date.teacherName,
-                    date: date.date,
-                    endDate: endDate,
                     _id: date._id
                 }
-                newDate.endDate.setHours(module.endHour, module.endTime)
-                newDate.date.setHours(module.startHour, module.startTime)
+                newDate.end.setHours(module.endHour, module.endTime)
+                newDate.start.setHours(module.startHour, module.startTime)
                 listLabEvents.push(newDate)
             })
             return list

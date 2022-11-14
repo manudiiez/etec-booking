@@ -6,11 +6,17 @@ import { Timeline, Event } from "react-timeline-scribble";
 /* ---------------------------- STYLED-COMPONENTS --------------------------- */
 import styled from 'styled-components'
 import { Text } from '../../theme/theme';
+/* ------------------------------ FULL-CALENDAR ----------------------------- */
+import FullCalendar from '@fullcalendar/react' // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+import timeGridPlugin from '@fullcalendar/timegrid';
+
 /* ------------------------------- COMPONENTS ------------------------------- */
 import Loader from '../Loader'
 import ItemModal from '../modal/ItemModal'
 import ItemModuleSelect from '../moduleList/ItemModuleSelect';
 import ItemLabSelect from './ItemLabSelect';
+
 
 
 const ItemLabCalendar = ({ data, loading, error, getEvent, editBooking, modal, changeModal, setBookingItem, bookingItem, handleChangeSelect, userId, deleteBooking }) => {
@@ -48,7 +54,29 @@ const ItemLabCalendar = ({ data, loading, error, getEvent, editBooking, modal, c
 
             <div className="container-lg">
                 <p>Eventos</p>
-                <Timeline>
+                <FullCalendar
+                    plugins={[timeGridPlugin]}
+                    slotDuration='00:30:00'
+                    slotMinTime='07:00:00'
+                    slotMaxTime='19:00:00'
+                    headerToolbar={{
+                        center: 'timeGridWeek timeGridDay' // buttons for switching between views
+                    }}
+                    views={{
+                        timeGridWeek: {
+                            type: 'timeGrid',
+                            duration: { days: 5 },
+                            buttonText: 'Week'
+                        }
+                    }}
+                    weekends={false}
+                    editable={true}
+                    selectable={true}
+                    events={data}
+
+                    eventClick={changeModal}
+                />
+                {/* <Timeline>
                     {
                         loading ? (
                             <Loader />
@@ -70,7 +98,7 @@ const ItemLabCalendar = ({ data, loading, error, getEvent, editBooking, modal, c
                         )
                     }
 
-                </Timeline>
+                </Timeline> */}
 
             </div>
         </Container>
