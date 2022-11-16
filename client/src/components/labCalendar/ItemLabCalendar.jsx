@@ -22,6 +22,7 @@ import ItemLabSelect from './ItemLabSelect';
 const ItemLabCalendar = ({ data, loading, error, getEvent, editBooking, modal, changeModal, setBookingItem, bookingItem, handleChangeSelect, userId, deleteBooking }) => {
 
     const selectBooking = (item) => {
+        console.log(item)
         setBookingItem({...item.event._def.extendedProps, date: item.event._instance.range.start})
         console.log(bookingItem)
         changeModal()
@@ -46,7 +47,7 @@ const ItemLabCalendar = ({ data, loading, error, getEvent, editBooking, modal, c
                     {
                         bookingItem && <ItemLabSelect handleChangeSelect={handleChangeSelect} id={userId} />
                     }
-                    <button onClick={selectBooking} disabled={new Date(bookingItem?.date).getDate() === new Date().getDate()} >Editar reserva</button>
+                    <button onClick={editBooking} disabled={new Date(bookingItem?.date).getDate() === new Date().getDate()} >Editar reserva</button>
                     <button onClick={deleteBooking}>Eliminar</button>
                 </ModalBody>
             </ItemModal>
